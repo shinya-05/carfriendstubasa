@@ -63,8 +63,10 @@
 {{-- ナビゲーション --}}
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-2">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            Car Friends Tsubasa
+        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+            <img src="{{ asset('images/logo.jpg') }}" 
+                alt="Car Friends Tsubasa"
+                style="height: 50px; width: auto; object-fit: contain;">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
