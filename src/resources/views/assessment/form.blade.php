@@ -1,70 +1,133 @@
 @extends('layout.app')
 
-@section('title', '買取査定 | カーフレンズツバサ')
+@section('title', '査定依頼')
 
 @section('content')
-<div class="container py-5">
+<div class="container py-5" style="max-width: 800px;">
+    <h1 class="mb-4 fw-bold text-center">査定依頼</h1>
+    <p class="text-muted text-center mb-5">
+        お車の査定をご希望の方は、下記フォームより必要事項をご入力ください。
+    </p>
 
-    <h2 class="fw-bold mb-4">買取査定フォーム</h2>
-
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
     @endif
 
-    <form action="{{ route('assessment.submit') }}" method="POST">
-        @csrf
-
-        <h5 class="fw-bold mb-2">お客様情報</h5>
-
-        <div class="mb-3">
-            <label class="form-label">お名前</label>
-            <input type="text" name="name" class="form-control" required>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0 ps-3">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+    @endif
 
-        <div class="mb-3">
-            <label class="form-label">電話番号</label>
-            <input type="text" name="phone" class="form-control" required>
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <form action="{{ route('assessment.submit') }}" method="POST">
+                @csrf
+
+                <div class="mb-4">
+                    <label for="name" class="form-label fw-semibold">お名前 <span class="text-danger">*</span></label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="form-control form-control-lg @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}"
+                        placeholder="例：山田 太郎"
+                    >
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="email" class="form-label fw-semibold">メールアドレス</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        class="form-control form-control-lg @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}"
+                        placeholder="例：example@example.com"
+                    >
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <div class="form-text">返信をご希望の場合はご入力ください。</div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="phone" class="form-label fw-semibold">電話番号 <span class="text-danger">*</span></label>
+                    <input
+                        type="text"
+                        name="phone"
+                        id="phone"
+                        class="form-control form-control-lg @error('phone') is-invalid @enderror"
+                        value="{{ old('phone') }}"
+                        placeholder="例：09012345678"
+                    >
+                    @error('phone')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="car_maker" class="form-label fw-semibold">メーカー <span class="text-danger">*</span></label>
+                    <input
+                        type="text"
+                        name="car_maker"
+                        id="car_maker"
+                        class="form-control form-control-lg @error('car_maker') is-invalid @enderror"
+                        value="{{ old('car_maker') }}"
+                        placeholder="例：トヨタ"
+                    >
+                    @error('car_maker')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="car_name" class="form-label fw-semibold">車種名 <span class="text-danger">*</span></label>
+                    <input
+                        type="text"
+                        name="car_name"
+                        id="car_name"
+                        class="form-control form-control-lg @error('car_name') is-invalid @enderror"
+                        value="{{ old('car_name') }}"
+                        placeholder="例：アルファード"
+                    >
+                    @error('car_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="message" class="form-label fw-semibold">備考・ご要望</label>
+                    <textarea
+                        name="message"
+                        id="message"
+                        rows="5"
+                        class="form-control @error('message') is-invalid @enderror"
+                        placeholder="年式、走行距離、車の状態などがあればご記入ください"
+                    >{{ old('message') }}</textarea>
+                    @error('message')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">
+                        査定依頼を送信する
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">メールアドレス</label>
-            <input type="email" name="email" class="form-control">
-        </div>
-
-        <h5 class="fw-bold mt-4 mb-2">車両情報</h5>
-
-        <div class="mb-3">
-            <label class="form-label">メーカー</label>
-            <input type="text" name="car_maker" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">車名</label>
-            <input type="text" name="car_name" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">年式</label>
-            <input type="number" name="year" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">走行距離</label>
-            <input type="number" name="mileage" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">車の状態</label>
-            <textarea name="condition" rows="4" class="form-control"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">備考欄</label>
-            <textarea name="message" rows="4" class="form-control"></textarea>
-        </div>
-
-        <button class="btn btn-primary">査定依頼を送信する</button>
-
-    </form>
+    </div>
 </div>
 @endsection

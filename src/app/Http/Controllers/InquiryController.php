@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InquiryReceivedMail;
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InquiryController extends Controller
 {
@@ -20,7 +22,9 @@ class InquiryController extends Controller
             'message' => 'required|min:10'
         ]);
 
-        Inquiry::create($request->all());
+        $inquiry = Inquiry::create($request->all());
+
+        Mail::to(env('ADMIN_EMAIL'))->send(new InquiryReceivedMail($inquiry));
 
         return redirect()->back()->with('success', 'お問い合わせを送信しました。');
     }

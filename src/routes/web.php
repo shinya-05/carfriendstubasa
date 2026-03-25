@@ -7,6 +7,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\CompanyController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CarController as AdminCarController;
@@ -21,6 +22,12 @@ use App\Http\Controllers\Admin\AssessmentController as AdminAssessmentController
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+/* 会社概要 */
+Route::get('/company/president', [CompanyController::class, 'president'])->name('company.president');
+Route::get('/company/profile', [CompanyController::class, 'profile'])->name('company.profile');
+Route::get('/company/philosophy', [CompanyController::class, 'philosophy'])->name('company.philosophy');
+Route::get('/company/history', [CompanyController::class, 'history'])->name('company.history');
 
 /* 在庫車両 */
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');

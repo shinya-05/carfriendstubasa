@@ -123,7 +123,7 @@
             <span>
                 <strong>{{ $news->title }}</strong>
                 <br>
-                <small class="text-muted">{{ $news->published_at->format('Y/m/d') }}</small>
+                <small class="text-muted">{{ optional($news->published_at)->format('Y/m/d') }}</small>
             </span>
             <a href="{{ route('admin.news.edit', $news) }}" class="btn btn-sm btn-outline-secondary">
                 編集

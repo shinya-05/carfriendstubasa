@@ -1,51 +1,87 @@
 @extends('layout.app')
 
-@section('title', 'お問い合わせ | カーフレンズツバサ')
+@section('title', 'お問い合わせ')
 
 @section('content')
-<div class="container py-5">
+<div class="container py-5" style="max-width: 800px;">
+    <h1 class="mb-4 fw-bold text-center">お問い合わせ</h1>
+    <p class="text-muted text-center mb-5">
+        ご不明点やご相談などございましたら、下記フォームよりお気軽にお問い合わせください。
+    </p>
 
-    <h2 class="fw-bold mb-4">お問い合わせ</h2>
-
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
     @endif
 
-    <form action="{{ route('contact.submit') }}" method="POST">
-        @csrf
-
-        <div class="mb-3">
-            <label class="form-label">お名前</label>
-            <input type="text" name="name" class="form-control" required>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0 ps-3">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+    @endif
 
-        <div class="mb-3">
-            <label class="form-label">メールアドレス</label>
-            <input type="email" name="email" class="form-control" required>
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <form action="{{ route('contact.submit') }}" method="POST">
+                @csrf
+
+                <div class="mb-4">
+                    <label for="name" class="form-label fw-semibold">お名前 <span class="text-danger">*</span></label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="form-control form-control-lg @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}"
+                        placeholder="例：山田 太郎"
+                    >
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="email" class="form-label fw-semibold">メールアドレス <span class="text-danger">*</span></label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        class="form-control form-control-lg @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}"
+                        placeholder="例：example@example.com"
+                    >
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="message" class="form-label fw-semibold">お問い合わせ内容 <span class="text-danger">*</span></label>
+                    <textarea
+                        name="message"
+                        id="message"
+                        rows="6"
+                        class="form-control @error('message') is-invalid @enderror"
+                        placeholder="お問い合わせ内容をご入力ください"
+                    >{{ old('message') }}</textarea>
+                    @error('message')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">
+                        送信する
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">電話番号</label>
-            <input type="tel" name="phone" class="form-control">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">お問い合わせ種別</label>
-            <select name="type" class="form-select">
-                <option value="購入について">購入について</option>
-                <option value="査定について">査定について</option>
-                <option value="車検について">車検について</option>
-                <option value="その他">その他</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">内容</label>
-            <textarea name="message" rows="5" class="form-control" required></textarea>
-        </div>
-
-        <button class="btn btn-primary">送信する</button>
-    </form>
-
+    </div>
 </div>
 @endsection

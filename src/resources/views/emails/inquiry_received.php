@@ -1,0 +1,10 @@
+お問い合わせがありました。
+
+【お名前】
+{{ $inquiry->name }}
+
+【メールアドレス】
+{{ $inquiry->email }}
+
+【お問い合わせ内容】
+{{ $inquiry->message }}

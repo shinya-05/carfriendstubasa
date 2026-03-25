@@ -21,9 +21,17 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        News::create($request->all());
+        $data = $request->all();
+
+        // チェックボックスは送信されると "on" → boolean に手動変換
+        $data['is_public'] = $request->has('is_public');
+
+        News::create($data);
+
         return redirect()->route('admin.news.index')->with('success', '登録しました');
     }
+
+
 
     public function edit(News $news)
     {
@@ -32,9 +40,15 @@ class NewsController extends Controller
 
     public function update(Request $request, News $news)
     {
-        $news->update($request->all());
+        $data = $request->all();
+        $data['is_public'] = $request->has('is_public');
+
+        $news->update($data);
+
         return redirect()->route('admin.news.index')->with('success', '更新しました');
     }
+
+
 
     public function destroy(News $news)
     {

@@ -18,7 +18,7 @@ class CarController extends Controller
 
     public function search(Request $request)
     {
-        $query = Car::query();
+        $query = Car::where('status', 'available');
 
         if ($request->maker) {
             $query->where('maker', $request->maker);
