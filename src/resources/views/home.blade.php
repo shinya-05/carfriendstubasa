@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Car Friends Tsubasa | 中古車販売・買取')
+@section('title', 'カーフレンズツバサ')
 
 @push('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>

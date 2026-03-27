@@ -12,10 +12,9 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email');
             $table->string('phone')->nullable();
-            $table->string('type'); // 購入/査定/車検など
+            $table->string('type')>nullable(); // 購入/査定/車検など
             $table->foreignId('car_id')->nullable()->constrained('cars')->nullOnDelete();
             $table->text('message');
-            $table->string('status')->default('new'); // new / processing / done
             $table->timestamps();
         });
     }
