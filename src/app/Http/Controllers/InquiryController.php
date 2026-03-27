@@ -24,7 +24,7 @@ class InquiryController extends Controller
 
         $inquiry = Inquiry::create($request->all());
 
-        //Mail::to(env('ADMIN_EMAIL'))->send(new InquiryReceivedMail($inquiry));
+        Mail::to(env('ADMIN_EMAIL'))->send(new InquiryReceivedMail($inquiry));
 
         return redirect()->back()->with('success', 'お問い合わせを送信しました。');
     }
