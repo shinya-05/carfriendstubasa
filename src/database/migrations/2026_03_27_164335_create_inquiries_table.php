@@ -4,23 +4,33 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up(): void
+class CreateInquiriesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
     {
         Schema::create('inquiries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email');
             $table->string('phone')->nullable();
-            $table->string('type')>nullable(); // 購入/査定/車検など
-            $table->foreignId('car_id')->nullable()->constrained('cars')->nullOnDelete();
+            $table->string('type')->nullable();
             $table->text('message');
             $table->timestamps();
         });
     }
 
-    public function down(): void
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
     {
         Schema::dropIfExists('inquiries');
     }
-};
+}
