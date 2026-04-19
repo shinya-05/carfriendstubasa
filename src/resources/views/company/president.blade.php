@@ -185,7 +185,7 @@
             <div class="col-lg-8">
                 <div class="content-box">
                     <div class="message-title">
-                        “安いから仕方ない”を、終わらせたい。
+                        覆したい
                     </div>
 
                     <div class="message-body">

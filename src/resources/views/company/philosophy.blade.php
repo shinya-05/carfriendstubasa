@@ -273,7 +273,7 @@
                             <div class="row g-4 align-items-center">
                                 <div class="col-lg-6">
                                     <div class="philo-media">
-                                        <img src="{{ asset('images/hero1.jpg') }}" alt="Mission">
+                                        <img src="{{ asset('images/hero6.jpg') }}" alt="Mission">
                                     </div>
                                 </div>
 
