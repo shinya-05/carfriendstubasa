@@ -16,16 +16,25 @@ class InquiryController extends Controller
 
     public function submit(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:50',
             'email' => 'required|email',
-            'message' => 'required|min:10'
+            'message' => 'required|min:10',
+            'privacy_consent' => 'accepted',
+        ], [
+            'privacy_consent.accepted' => 'プライバシーポリシーへの同意が必要です。',
         ]);
 
-        $inquiry = Inquiry::create($request->all());
+        unset($validated['privacy_consent']);
+        $inquiry = Inquiry::create($validated);
 
         Mail::to(env('ADMIN_EMAIL'))->send(new InquiryReceivedMail($inquiry));
 
-        return redirect()->back()->with('success', 'お問い合わせを送信しました。');
+        return redirect()->back()
+            ->with('success', 'お問い合わせを送信しました。')
+            ->with('analytics_event', [
+                'name' => 'generate_lead',
+                'params' => ['lead_type' => 'contact'],
+            ]);
     }
 }
