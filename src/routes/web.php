@@ -29,6 +29,9 @@ Route::get('/company/profile', [CompanyController::class, 'profile'])->name('com
 Route::get('/company/philosophy', [CompanyController::class, 'philosophy'])->name('company.philosophy');
 Route::get('/company/history', [CompanyController::class, 'history'])->name('company.history');
 
+/* プライバシーポリシー */
+Route::view('/privacy-policy', 'privacy-policy')->name('privacy-policy');
+
 /* 在庫車両 */
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
 Route::get('/cars/search', [CarController::class, 'search'])->name('cars.search');
