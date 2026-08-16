@@ -6,6 +6,17 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    @if(config('services.google_analytics.measurement_id'))
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.measurement_id') }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', @json(config('services.google_analytics.measurement_id')));
+        </script>
+    @endif
+
     {{-- Bootstrap 5 --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -385,6 +396,7 @@
               <h6>CONTACT</h6>
               <a href="{{ route('contact.form') }}">お問い合わせ</a>
               <a href="{{ route('assessment.form') }}">買取査定</a>
+              <a href="{{ route('privacy-policy') }}">プライバシーポリシー</a>
             </div>
           </div>
         </div>
@@ -436,6 +448,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 @stack('scripts')
+
+@if(config('services.google_analytics.measurement_id'))
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sendEvent = (name, params = {}) => {
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', name, params);
+        }
+    };
+
+    document.addEventListener('click', (event) => {
+        const link = event.target.closest('a[href]');
+        if (!link) return;
+
+        const href = link.href;
+        if (href.startsWith('tel:')) {
+            sendEvent('click_to_call', { link_url: href, link_text: link.textContent.trim() });
+            return;
+        }
+
+        if (href.includes('goo-net.com')) {
+            sendEvent('outbound_inventory_click', { destination: 'goo_net', link_url: href });
+            return;
+        }
+
+        if (href.includes('carsensor.net')) {
+            sendEvent('outbound_inventory_click', { destination: 'carsensor', link_url: href });
+            return;
+        }
+
+        if (href.includes('instagram.com') || href.includes('youtube.com')) {
+            sendEvent('social_click', {
+                destination: href.includes('instagram.com') ? 'instagram' : 'youtube',
+                link_url: href
+            });
+        }
+    });
+
+    @if(session('analytics_event'))
+        sendEvent(
+            @json(session('analytics_event.name')),
+            @json(session('analytics_event.params', []))
+        );
+    @endif
+});
+</script>
+@endif
 
 {{-- スクロール表示：買取査定CTA --}}
 <a href="{{ route('assessment.form') }}" 
