@@ -23,12 +23,21 @@ class AssessmentController extends Controller
             'car_maker' => 'required|max:50',
             'car_name' => 'required|max:50',
             'message' => 'nullable|max:2000',
+            'privacy_consent' => 'accepted',
+        ], [
+            'privacy_consent.accepted' => 'プライバシーポリシーへの同意が必要です。',
         ]);
 
+        unset($validated['privacy_consent']);
         $assessment = Assessment::create($validated);
 
         Mail::to(env('ADMIN_EMAIL'))->send(new AssessmentReceivedMail($assessment));
 
-        return redirect()->back()->with('success', '査定依頼を送信しました。');
+        return redirect()->back()
+            ->with('success', '査定依頼を送信しました。')
+            ->with('analytics_event', [
+                'name' => 'generate_lead',
+                'params' => ['lead_type' => 'assessment'],
+            ]);
     }
 }
