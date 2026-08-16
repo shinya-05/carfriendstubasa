@@ -40,6 +40,7 @@
                         class="form-control form-control-lg @error('name') is-invalid @enderror"
                         value="{{ old('name') }}"
                         placeholder="例：山田 太郎"
+                        required
                     >
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -55,6 +56,7 @@
                         class="form-control form-control-lg @error('email') is-invalid @enderror"
                         value="{{ old('email') }}"
                         placeholder="例：example@example.com"
+                        required
                     >
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -69,8 +71,29 @@
                         rows="6"
                         class="form-control @error('message') is-invalid @enderror"
                         placeholder="お問い合わせ内容をご入力ください"
+                        required
+                        minlength="10"
                     >{{ old('message') }}</textarea>
                     @error('message')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-check mb-4">
+                    <input
+                        class="form-check-input @error('privacy_consent') is-invalid @enderror"
+                        type="checkbox"
+                        name="privacy_consent"
+                        id="privacy_consent"
+                        value="1"
+                        {{ old('privacy_consent') ? 'checked' : '' }}
+                        required
+                    >
+                    <label class="form-check-label" for="privacy_consent">
+                        <a href="{{ route('privacy-policy') }}" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意する
+                        <span class="text-danger">*</span>
+                    </label>
+                    @error('privacy_consent')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
