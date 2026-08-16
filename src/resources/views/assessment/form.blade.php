@@ -40,6 +40,7 @@
                         class="form-control form-control-lg @error('name') is-invalid @enderror"
                         value="{{ old('name') }}"
                         placeholder="例：山田 太郎"
+                        required
                     >
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -71,6 +72,7 @@
                         class="form-control form-control-lg @error('phone') is-invalid @enderror"
                         value="{{ old('phone') }}"
                         placeholder="例：09012345678"
+                        required
                     >
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -86,6 +88,7 @@
                         class="form-control form-control-lg @error('car_maker') is-invalid @enderror"
                         value="{{ old('car_maker') }}"
                         placeholder="例：トヨタ"
+                        required
                     >
                     @error('car_maker')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -101,6 +104,7 @@
                         class="form-control form-control-lg @error('car_name') is-invalid @enderror"
                         value="{{ old('car_name') }}"
                         placeholder="例：アルファード"
+                        required
                     >
                     @error('car_name')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -117,6 +121,25 @@
                         placeholder="年式、走行距離、車の状態などがあればご記入ください"
                     >{{ old('message') }}</textarea>
                     @error('message')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-check mb-4">
+                    <input
+                        class="form-check-input @error('privacy_consent') is-invalid @enderror"
+                        type="checkbox"
+                        name="privacy_consent"
+                        id="privacy_consent"
+                        value="1"
+                        {{ old('privacy_consent') ? 'checked' : '' }}
+                        required
+                    >
+                    <label class="form-check-label" for="privacy_consent">
+                        <a href="{{ route('privacy-policy') }}" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意する
+                        <span class="text-danger">*</span>
+                    </label>
+                    @error('privacy_consent')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
