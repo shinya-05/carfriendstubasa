@@ -1,983 +1,138 @@
 @extends('layout.app')
 
-@section('title', 'カーフレンズツバサ')
+@section('title', 'つくば市の格安軽自動車｜カーフレンズツバサ')
+@section('meta_description', '茨城県つくば市の軽自動車専門店カーフレンズツバサ。低価格でも状態を丁寧にご説明し、全国販売・オンラインでの車両確認にも対応。中古車販売・買取・車検・整備までご相談ください。')
+
+@push('head')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoDealer",
+  "name": "株式会社カーフレンズツバサ",
+  "url": "{{ url('/') }}",
+  "telephone": "+81-29-879-9474",
+  "image": "{{ asset('images/logo.jpg') }}",
+  "address": {"@type":"PostalAddress","postalCode":"300-1243","addressRegion":"茨城県","addressLocality":"つくば市","streetAddress":"大井1440-48","addressCountry":"JP"},
+  "openingHoursSpecification": [{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Thursday","Friday","Saturday","Sunday"],"opens":"10:00","closes":"18:00"}],
+  "areaServed": ["つくば市","土浦市","牛久市","茨城県","日本全国"]
+}
+</script>
+@endpush
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-
 <style>
-/* ---------------------------------------------
-   0. 全体ブランドテーマ
---------------------------------------------- */
-:root {
-    --cft-navy: #0B2C56;
-    --cft-gold: #C9A14C;
-    --cft-gray: #f6f6f6;
-}
-
-body {
-    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 40%, #eef1f5 100%);
-}
-
-
-/* ---------------------------------------------
-   1. HERO（Ken Burns ＋ overlay + BMW矢印）
---------------------------------------------- */
-/* HERO wrapper（文字は動かさない） */
-.heroSwiper .swiper-slide{
-  position: relative;
-}
-
-/* 画像＆文字の土台 */
-.hero-frame{
-  position: relative;
-  overflow: hidden;
-  height: 1000px;
-}
-
-/* 画像だけ動かすレイヤー */
-.hero-media{
-  position: absolute;
-  inset: 0;
-  background-size: cover !important;
-  background-position: center !important;
-  transform: scale(1.08); /* 初期少し拡大 */
-  will-change: transform, filter;
-}
-
-/* オーバーレイ（画像の上・文字の下） */
-.hero-frame::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,0.45);
-  z-index: 1;
-}
-
-/* 文字は常に最前面で固定 */
-.hero-copy{
-  position: absolute;
-  left: clamp(18px, 6vw, 70px);
-  top: 55%;
-  transform: translateY(-50%);
-  z-index: 2;
-  color:#fff;
-  text-align:left;
-  max-width: min(980px, 88vw);
-}
-
-/* Ken Burns：画像だけ */
-@keyframes kenburns-media {
-  0%   { transform: scale(1.08) translate3d(0,0,0); filter: blur(0px); }
-  100% { transform: scale(1.18) translate3d(-1.5%, -1.0%, 0); filter: blur(1.5px); }
-}
-
-/* アクティブスライドの画像だけアニメ */
-.heroSwiper .swiper-slide-active .hero-media{
-  animation: kenburns-media 5s ease-out both;
-}
-
-/* SP調整 */
-@media (max-width: 767px){
-  .hero-frame{ height: 780px; }
-  .hero-copy{ top: 58%; }
-}
-
-
-/* BMW風矢印 */
-.heroSwiper .swiper-button-next,
-.heroSwiper .swiper-button-prev {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.35);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    transition: all .3s ease;
-}
-
-.heroSwiper .swiper-button-next:hover,
-.heroSwiper .swiper-button-prev:hover {
-    background: rgba(255,255,255,0.55);
-    transform: scale(1.1);
-}
-
-.heroSwiper .swiper-button-next::after,
-.heroSwiper .swiper-button-prev::after {
-    color: var(--cft-navy);
-    font-size: 1.3rem;
-}
-
-/* ===============================
-   HERO Copy（buddica風：左寄せ・大きい文字）
-================================ */
-.hero-copy{
-  position: absolute;
-  left: clamp(18px, 6vw, 70px);
-  top: 55%;
-  transform: translateY(-50%);
-  z-index: 4;                 /* overlayより上 */
-  color: #fff;
-  text-align: left;
-  max-width: min(980px, 88vw);
-}
-
-.hero-kicker{
-  display: inline-flex;
-  align-items: center;
-  gap: .6rem;
-  font-weight: 900;
-  letter-spacing: .12em;
-  font-size: clamp(1.2rem, 2.4vw, 2.2rem);
-  margin-bottom: 14px;
-  text-shadow: 0 8px 22px rgba(0,0,0,.45);
-}
-
-.hero-kicker::before{
-  content: "—";
-  opacity: .9;
-}
-.hero-kicker::after{
-  content: "—";
-  opacity: .9;
-}
-
-.hero-headline{
-  font-weight: 900;
-  letter-spacing: .02em;
-  line-height: 1.18;
-  font-size: clamp(1.8rem, 4.2vw, 3.6rem);
-  text-shadow: 0 10px 28px rgba(0,0,0,.55);
-  margin: 0;
-}
-
-/* 追加のサブ説明（任意） */
-.hero-note{
-  margin-top: 14px;
-  font-size: clamp(.95rem, 1.4vw, 1.1rem);
-  color: rgba(255,255,255,.88);
-  line-height: 1.9;
-  text-shadow: 0 6px 18px rgba(0,0,0,.45);
-}
-
-/* 画面が狭いときは少し上げる */
-@media (max-width: 767px){
-  .hero-copy{ top: 58%; }
-}
-
-
-/* ===============================
-   フル幅・超強調 購入ボタン
-================================ */
-
-.buy-cta {
-    display: block;
-    width: 100%;
-    padding: 22px 30px;
-    font-size: 1.3rem;
-    font-weight: 800;
-    border-radius: 14px;
-    text-align: center;
-    text-decoration: none;
-    transition: all .3s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,.25);
-}
-
-/* グーネット（ゴールド×ネイビー） */
-.buy-cta-goo {
-    background: linear-gradient(135deg, #c40000, #ff3b3b);
-    color: #fff;
-}
-
-.buy-cta-goo:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 18px 45px rgba(196,0,0,.45);
-    color: #fff;
-}
-
-/* カーセンサー（オレンジ系で差別化） */
-.buy-cta-cs {
-    background: linear-gradient(135deg, #ff7a00, #ffb347);
-    color: #fff;
-}
-
-.buy-cta-cs:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 18px 45px rgba(255,122,0,.45);
-    color: #fff;
-}
-
-/* 上に置く強調テキスト */
-.buy-lead {
-    font-size: 1.5rem;
-    font-weight: 900;
-    margin-bottom: 18px;
-}
-
-/* ---------------------------------------------
-   2. セクションタイトル
---------------------------------------------- */
-.section-title {
-    font-size: 2.0rem;
-    font-weight: 700;
-    border-left: 5px solid var(--cft-navy);
-    padding-left: 12px;
-    margin: 1.2rem 0px;
-    text-align:center;
-    border-left: none; 
-}
-
-.section-sub {
-    color: #666;
-    font-size: 0.95rem;
-}
-
-
-/* ---------------------------------------------
-   3. ボディタイプボタン（かわいく丸型）
---------------------------------------------- */
-
-.category-btn {
-    border-radius: 999px;
-    padding: 12px 30px;
-    font-weight: 600;
-    font-size: 1rem;
-    border-width: 2px;
-    border-color: var(--cft-navy);
-    background: #ffffff;
-    color: var(--cft-navy);
-    transition: all .25s ease;
-}
-
-.category-btn:hover {
-    background: var(--cft-navy);
-    color: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-}
-
-.category-btn i {
-    font-size: 1.2rem;
-}
-
-/* ---- Why choose style cards ---- */
-.feature-card {
-    display: block;
-    padding: 32px 20px;
-    background: #fff;
-    border-radius: 14px;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-}
-
-.feature-icon i {
-    font-size: 42px;
-    color: var(--cft-navy);
-}
-
-.feature-photo {
-    width: 270px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-
-
-
-/* ---------------------------------------------
-   4. 特選車カード（BMW Premium Selection）
---------------------------------------------- */
-
-.car-card {
-    border-radius: 12px;
-    overflow: hidden;
-    border: none;
-    background: #ffffff;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
-    transition: all .25s ease;
-}
-
-.car-card img {
-    height: 450px;
-    object-fit: cover;
-}
-
-.car-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 28px rgba(0,0,0,0.15);
-}
-
-.car-card .card-body {
-    padding: 24px 26px;
-}
-
-.price-tag {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #C6292F;
-    letter-spacing: 0.02em;
-}
-
-
-/* ---------------------------------------------
-   5. 店舗案内・スタッフ・会社情報
---------------------------------------------- */
-
-.shop-section {
-    background: linear-gradient(90deg, #ffffff 0%, #f8f9fb 40%, #eef1f5 100%);
-}
-
-.staff-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    border: none;
-    overflow: hidden;
-    height: 550px;
-}
-
-.staff-photo {
-    width: 100%;
-    height: 320px;           /* ← 高さを固定（変更OK） */
-    object-fit: cover;       /* ← トリミングしてフィット */
-    object-position: center; /* ← 中央を基準に切り抜き */
-    background-size: cover;
-    background-position: center;
-    border-bottom: 0;
-}
-
-
-.card-body {
-    padding: 20px;
-}
-
-.company-section {
-    background-color: var(--cft-navy);
-    color: #f9fafb;
-}
-
-.company-section .accent {
-    color: var(--cft-gold);
-    font-weight: 600;
-}
-
-.company-table th { width: 120px; color:rgb(30, 30, 31); font-weight: 600; }
-.company-table td { color:rgb(28, 30, 31); }
-
-
+:root{--cft-navy:#09294f;--cft-blue:#134a7c;--cft-gold:#d2aa55;--cft-red:#c9272c;--cft-ink:#172333;--cft-muted:#627083;--cft-paper:#f4f7fa}
+body{background:#fff;color:var(--cft-ink)}
+.home-section{padding:clamp(64px,8vw,104px) 0}.home-section--soft{background:var(--cft-paper)}
+.eyebrow{color:var(--cft-blue);font-size:.78rem;font-weight:900;letter-spacing:.18em}
+.section-heading{margin:10px 0 14px;font-size:clamp(1.8rem,3.4vw,2.8rem);font-weight:900;letter-spacing:-.025em;line-height:1.35}
+.section-lead{max-width:760px;color:var(--cft-muted);font-size:1.03rem;line-height:2}
+.home-hero{position:relative;min-height:min(860px,92vh);display:flex;align-items:center;color:#fff;overflow:hidden;background:#071b30 url('/images/hero2.jpg') center 44%/cover no-repeat}
+.home-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,19,36,.92),rgba(5,27,51,.76) 48%,rgba(5,20,38,.28))}
+.home-hero__content{position:relative;z-index:1;max-width:820px;padding:126px 0 72px}
+.home-hero__label{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid rgba(255,255,255,.32);border-radius:999px;background:rgba(0,0,0,.18);backdrop-filter:blur(7px);font-size:.82rem;font-weight:800}
+.home-hero h1{margin:22px 0 18px;font-size:clamp(2.35rem,5.6vw,5rem);font-weight:900;letter-spacing:-.045em;line-height:1.14;text-shadow:0 8px 30px rgba(0,0,0,.28)}
+.home-hero__accent{color:#f0cb78}.home-hero__lead{max-width:690px;margin:0 0 28px;color:rgba(255,255,255,.9);font-size:clamp(1rem,1.8vw,1.2rem);line-height:1.9}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}.hero-btn{display:inline-flex;min-height:56px;align-items:center;justify-content:center;gap:9px;padding:14px 22px;border:1px solid transparent;border-radius:8px;font-weight:900;text-decoration:none;transition:.2s}
+.hero-btn:hover{transform:translateY(-2px)}.hero-btn--primary{background:var(--cft-red);color:#fff;box-shadow:0 12px 30px rgba(201,39,44,.28)}.hero-btn--primary:hover{color:#fff;background:#ae1f24}
+.hero-btn--light{border-color:rgba(255,255,255,.52);background:rgba(255,255,255,.1);color:#fff;backdrop-filter:blur(8px)}.hero-btn--light:hover{color:#fff;background:rgba(255,255,255,.2)}
+.hero-facts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:30px;color:rgba(255,255,255,.84);font-size:.9rem}.hero-facts span{display:inline-flex;align-items:center;gap:7px}.hero-facts i{color:#f0cb78}
+.inventory-panel{position:relative;z-index:3;margin-top:-50px;border-radius:18px;background:#fff;box-shadow:0 24px 70px rgba(9,41,79,.18);overflow:hidden}
+.inventory-panel__intro{padding:28px 30px;background:var(--cft-navy);color:#fff}.inventory-panel__intro h2{margin:4px 0 5px;font-size:clamp(1.35rem,2.5vw,1.8rem);font-weight:900}.inventory-panel__intro p{margin:0;color:rgba(255,255,255,.76);font-size:.92rem}
+.inventory-links{display:grid;grid-template-columns:1fr 1fr}.inventory-link{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:118px;padding:24px 30px;color:var(--cft-ink);text-decoration:none;border-right:1px solid #e7ebef;transition:.2s}.inventory-link:last-child{border:0}.inventory-link:hover{background:#f8fafc;color:var(--cft-navy)}
+.inventory-link__name{display:block;margin-bottom:5px;font-size:1.15rem;font-weight:900}.inventory-link__note{color:var(--cft-muted);font-size:.85rem}.inventory-link i{width:42px;height:42px;display:grid;place-items:center;flex:0 0 auto;border-radius:50%;background:var(--cft-paper);color:var(--cft-navy)}
+.promise-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:38px}.promise-card{padding:28px 24px;border:1px solid #e3e9ef;border-radius:14px;background:#fff}.promise-card__number{color:var(--cft-gold);font-size:.78rem;font-weight:900;letter-spacing:.12em}.promise-card h3{margin:12px 0 10px;font-size:1.08rem;font-weight:900;line-height:1.55}.promise-card p{margin:0;color:var(--cft-muted);font-size:.9rem;line-height:1.85}
+.promise-note{margin-top:18px;padding:13px 16px;border-radius:8px;background:#fff8e9;color:#715a27;font-size:.84rem;line-height:1.7}
+.statement{position:relative;overflow:hidden;background:var(--cft-navy);color:#fff}.statement:after{content:"TSUBASA";position:absolute;right:-20px;bottom:-54px;color:rgba(255,255,255,.035);font-size:clamp(6rem,18vw,15rem);font-weight:900}
+.statement__inner{position:relative;z-index:1;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}.statement__figure{border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.24)}.statement__figure img{display:block;width:100%;height:420px;object-fit:cover}.statement .eyebrow{color:#f0cb78}.statement p{color:rgba(255,255,255,.79);line-height:2}.statement blockquote{margin:24px 0;padding-left:20px;border-left:3px solid var(--cft-gold);font-size:clamp(1.25rem,2.4vw,1.7rem);font-weight:900;line-height:1.65}
+.step-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:40px;counter-reset:step}.step{padding:0 26px;border-left:1px solid #dfe5eb;counter-increment:step}.step:first-child{padding-left:0;border:0}.step:before{content:"0" counter(step);display:block;margin-bottom:12px;color:var(--cft-gold);font-size:1.35rem;font-weight:900}.step h3{font-size:1.05rem;font-weight:900}.step p{margin:0;color:var(--cft-muted);font-size:.88rem;line-height:1.8}
+.nationwide-box{display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden;border-radius:18px;background:#fff;box-shadow:0 18px 50px rgba(9,41,79,.11)}.nationwide-box__copy{padding:clamp(34px,5vw,62px)}.nationwide-box__media{min-height:360px;background:url('/images/hero1.jpg') center/cover no-repeat}
+.check-list{display:grid;gap:11px;margin:24px 0 28px;padding:0;list-style:none}.check-list li{display:flex;gap:10px;color:var(--cft-muted)}.check-list i{margin-top:5px;color:var(--cft-gold)}
+.store-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:38px;align-items:stretch;margin-top:36px}.store-map{min-height:430px;overflow:hidden;border-radius:16px;box-shadow:0 15px 45px rgba(9,41,79,.12)}.store-map iframe{width:100%;height:100%;border:0}.store-card{padding:34px;border-radius:16px;background:var(--cft-navy);color:#fff}.store-card h3{margin-bottom:25px;font-weight:900}
+.store-info{display:grid;margin:0}.store-info div{display:grid;grid-template-columns:86px 1fr;gap:16px;padding:15px 0;border-top:1px solid rgba(255,255,255,.13)}.store-info dt{color:rgba(255,255,255,.58);font-size:.82rem}.store-info dd{margin:0;font-weight:700;line-height:1.7}.store-info a{color:#fff}.store-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.store-actions a{display:inline-flex;align-items:center;gap:7px;padding:12px 16px;border-radius:7px;background:#fff;color:var(--cft-navy);font-weight:900;text-decoration:none}
+.faq-wrap{max-width:900px;margin:36px auto 0}.accordion-item{border-color:#dfe5eb}.accordion-button{padding:22px;color:var(--cft-ink);font-weight:900}.accordion-button:not(.collapsed){color:var(--cft-navy);background:#edf4fa;box-shadow:none}.accordion-body{color:var(--cft-muted);line-height:1.9}
+.final-cta{padding:clamp(56px,8vw,90px) 0;background:linear-gradient(135deg,#0a294e,#123f6c);color:#fff;text-align:center}.final-cta h2{font-size:clamp(1.8rem,3.4vw,2.7rem);font-weight:900}.final-cta p{color:rgba(255,255,255,.77);line-height:1.9}.final-cta .hero-actions{justify-content:center}
+@media(max-width:991px){.promise-grid{grid-template-columns:1fr 1fr}.statement__inner,.nationwide-box,.store-grid{grid-template-columns:1fr}.statement__inner{gap:36px}.nationwide-box__media{min-height:300px;order:-1}.step-grid{grid-template-columns:1fr 1fr;gap:28px 0}.step:nth-child(3){padding-left:0;border:0}}
+@media(max-width:767px){.home-hero{min-height:760px;background-position:58% center}.home-hero:before{background:rgba(4,19,36,.76)}.home-hero__content{padding-top:118px}.hero-actions{display:grid}.hero-btn{width:100%}.inventory-panel{margin-top:-34px}.inventory-panel__intro{padding:22px}.inventory-links,.promise-grid,.step-grid{grid-template-columns:1fr}.inventory-link{min-height:100px;padding:20px 22px;border-right:0;border-bottom:1px solid #e7ebef}.step,.step:nth-child(3){padding:20px 0;border-left:0;border-top:1px solid #dfe5eb}.step:first-child{border-top:0}.statement__figure img{height:320px}.store-map{min-height:330px}.store-card{padding:26px 22px}}
 </style>
 @endpush
 
-
-
 @section('content')
-
-{{-- =====================================
-      ① HERO：スライダー
-===================================== --}}
-<div class="swiper heroSwiper mb-5">
-  <div class="swiper-wrapper">
-
-    {{-- 1枚目：VISION（展望） --}}
-    <div class="swiper-slide">
-        <div class="hero-frame">
-            <div class="hero-media" style="background-image:url('/images/hero2.jpg')"></div>
-
-            <div class="hero-copy">
-                <div class="hero-kicker">VISION</div>
-                <h1 class="hero-headline">価格以上の安心を提供する、<br/>信頼の店へ</h1>
-            </div>
-        </div>
-    </div>
-
-    {{-- 2枚目：MISSION（使命） --}}
-    <div class="swiper-slide">
-        <div class="hero-frame">
-            <div class="hero-media" style="background-image:url('/images/hero.jpg')"></div>
-
-            <div class="hero-copy">
-            <div class="hero-kicker">MISSION</div>
-            <h2 class="hero-headline">”低価格市場の基準”を<br/>引き上げる</h2>
-            </div>
-        </div>
-    </div>
-
-    {{-- 3枚目：VALUE（行動指針） --}}
-    <div class="swiper-slide">
-        <div class="hero-frame">
-            <div class="hero-media" style="background-image:url('/images/hero1.jpg')"></div>
-
-            <div class="hero-copy">
-            <div class="hero-kicker">VALUE</div>
-            <h2 class="hero-headline">車両品質最優先</h2>
-            </div>
-        </div>
-    </div>
-
+<section class="home-hero">
+ <div class="container"><div class="home-hero__content">
+  <div class="home-hero__label"><i class="fa-solid fa-location-dot"></i> 茨城県つくば市・軽自動車専門店</div>
+  <h1>予算を抑えても、<br><span class="home-hero__accent">安心</span>はあきらめない。</h1>
+  <p class="home-hero__lead">低価格の軽自動車だからこそ、状態を丁寧にお伝えします。価格だけで決めず、納得して選べる一台を一緒に探します。</p>
+  <div class="hero-actions">
+   <a class="hero-btn hero-btn--primary" href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i> 最新の在庫を見る</a>
+   <a class="hero-btn hero-btn--light" href="{{ route('contact.form') }}"><i class="fa-regular fa-calendar-check"></i> 来店・車両相談をする</a>
+   <a class="hero-btn hero-btn--light" href="tel:0298799474"><i class="fa-solid fa-phone"></i> 029-879-9474</a>
   </div>
-
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-</div>
-
-
-{{-- =====================================
-      NEW：軽自動車専門 × 低価格宣言
-===================================== --}}
-<section class="py-5 bg-white">
-    <div class="container text-center">
-
-        <h2 class="section-title mb-3">
-            SERVICE
-        </h2>
-
-        <p class="section-sub mb-5">
-            仕入れルートの最適化とコスト削減により、
-            高品質な軽自動車をできるだけお求めやすい価格でご提供しています。
-        </p>
-
-        <div class="row g-4">
-
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon mb-3">
-                        <i class="fa-solid fa-yen-sign"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2">無駄なコストを削減</h5>
-                    <p class="small text-muted">
-                        広告費や中間マージンを抑え、
-                        その分を販売価格に還元しています。
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon mb-3">
-                        <i class="fa-solid fa-truck"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2">厳選仕入れ</h5>
-                    <p class="small text-muted">
-                        オークションや業者間取引を活用し、
-                        コストパフォーマンスの高い車両を厳選。
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon mb-3">
-                        <i class="fa-solid fa-car"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2">軽自動車に特化</h5>
-                    <p class="small text-muted">
-                        軽自動車に集中することで、
-                        仕入れ・整備・販売まで効率化を実現。
-                    </p>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="mt-5">
-
-            <div class="buy-lead text-center">
-                今すぐお買い得な軽自動車をチェック！
-            </div>
-            <div class="d-grid gap-3">
-                {{-- グーネット --}}
-                <a href="https://www.goo-net.com/usedcar_shop/0401923/detail.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="buy-cta buy-cta-goo">
-
-                    グーネットで在庫を見る（購入はこちら）
-                    <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i>
-                </a>
-
-                {{-- カーセンサー --}}
-                <a href="https://www.carsensor.net/shop/ibaraki/325043001/map/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="buy-cta buy-cta-cs">
-
-                    カーセンサーで在庫を見る（購入はこちら）
-                    <i class="fa-solid fa-arrow-up-right-from-square ms-2"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+  <div class="hero-facts"><span><i class="fa-solid fa-circle-check"></i> 軽自動車に特化</span><span><i class="fa-solid fa-circle-check"></i> 全国販売に対応</span><span><i class="fa-solid fa-clock"></i> 10:00〜18:00／火・水曜定休</span></div>
+ </div></div>
 </section>
 
-<!-- 
-
-{{-- =====================================
-      ② ボディタイプから探す
-===================================== --}}
-<div class="container py-5">
-
-    <h2 class="section-title text-center mb-2">ボディタイプから探す</h2>
-    <p class="section-sub text-center mb-5">軽自動車を中心に、用途に合う一台をお選びいただけます。</p>
-
-    <div class="row g-4 justify-content-center">
-
-        {{-- ちょうどいい軽 --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.search', ['body_type' => 'ちょうどいい軽']) }}" class="feature-card text-center">
-                <img src="/images/icons/tyoudoiikei.jpg" class="feature-photo mb-3" alt="ちょうどいい軽">
-                <h5 class="fw-bold mb-2">ミドルクラス</h5>
-                <p class="text-muted small mb-0">街乗り・通勤にちょうど良い定番タイプ。</p>
-            </a>
-        </div>
-
-        {{-- 軽スライド --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.search', ['body_type' => '軽スライド']) }}" class="feature-card text-center">
-                <img src="/images/icons/kei-slide.jpg" class="feature-photo mb-3" alt="軽スライド">
-                <h5 class="fw-bold mb-2">軽スライド</h5>
-                <p class="text-muted small mb-0">乗り降りラクで、ファミリーにも人気。</p>
-            </a>
-        </div>
-
-        {{-- 軽バン、ワゴン --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.search', ['body_type' => '軽バン']) }}" class="feature-card text-center">
-                <img src="/images/icons/kei-van.jpg" class="feature-photo mb-3" alt="軽バン">
-                <h5 class="fw-bold mb-2">軽バン、ワゴン</h5>
-                <p class="text-muted small mb-0">荷物が積める。仕事・趣味に最適。</p>
-            </a>
-        </div>
-
-        {{-- 普通車 --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.index') }}" class="feature-card text-center">
-                <img src="/images/icons/suv.jpg" class="feature-photo mb-3" alt="その他">
-                <h5 class="fw-bold mb-2">普通車</h5>
-                <p class="text-muted small mb-0">こだわり条件で在庫をチェック。</p>
-            </a>
-        </div>
-
-    </div>
-</div>
-
-
-{{-- =====================================
-      ②-2 メーカーから探す
-===================================== --}}
-<div class="container pb-5">
-
-    <h2 class="section-title text-center mb-2">メーカーから探す</h2>
-    <p class="section-sub text-center mb-5">人気メーカーから、安心の一台を探せます。</p>
-
-    <div class="row g-4 justify-content-center">
-
-        {{-- ホンダ --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.search', ['maker' => 'ホンダ']) }}" class="feature-card text-center">
-                <img src="/images/icons/honda.jpg" class="feature-photo mb-3" alt="ホンダ">
-                <h5 class="fw-bold mb-2">ホンダ</h5>
-                <p class="text-muted small mb-0">走り・安全・使い勝手のバランス。</p>
-            </a>
-        </div>
-
-        {{-- スズキ --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.search', ['maker' => 'スズキ']) }}" class="feature-card text-center">
-                <img src="/images/icons/suzuki.jpg" class="feature-photo mb-3" alt="スズキ">
-                <h5 class="fw-bold mb-2">スズキ</h5>
-                <p class="text-muted small mb-0">軽の定番。コスパ重視の方に。</p>
-            </a>
-        </div>
-
-        {{-- ダイハツ --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.search', ['maker' => 'ダイハツ']) }}" class="feature-card text-center">
-                <img src="/images/icons/daihatu.jpg" class="feature-photo mb-3" alt="ダイハツ">
-                <h5 class="fw-bold mb-2">ダイハツ</h5>
-                <p class="text-muted small mb-0">日常にちょうどいい軽が充実。</p>
-            </a>
-        </div>
-
-        {{-- ニッサン --}}
-        <div class="col-6 col-md-3">
-            <a href="{{ route('cars.search', ['maker' => '日産']) }}" class="feature-card text-center">
-                <img src="/images/icons/nissan.jpg" class="feature-photo mb-3" alt="日産">
-                <h5 class="fw-bold mb-2">日産</h5>
-                <p class="text-muted small mb-0">信頼性・維持のしやすさで選ぶ。</p>
-            </a>
-        </div>
-    </div>
-</div>
-
--->
-
-{{-- =====================================
-      ③ 特選車
-===================================== --}}
-<!-- 
-<div class="container mb-5">
-    <h2 class="section-title">特選車</h2>
-    <p class="section-sub text-center mb-5">走行距離・装備・状態ともにおすすめできる、厳選の特選車をご紹介します。</p>
-
-    <div class="row g-4">
-        @forelse($featuredCars as $car)
-        <div class="col-md-4">
-            <a href="{{ route('cars.show', $car) }}" class="text-decoration-none text-dark">
-                <div class="car-card">
-                    <img src="{{ $car->main_image ? asset('storage/' . $car->main_image) : asset('images/noimage.jpg') }}" alt="">
-
-                    <div class="card-body">
-                        <span class="badge bg-dark mb-2">{{ $car->maker }}</span>
-                        <h5 class="fw-bold mb-1">{{ $car->car_name }}</h5>
-
-                        <div class="d-flex justify-content-between small text-muted mb-2">
-                            <span>{{ $car->model_year }}年式</span>
-                            <span>{{ number_format($car->mileage) }} km</span>
-                        </div>
-
-                        <div class="price-tag mb-1">{{ number_format($car->price) }} 万円</div>
-                        <div class="small text-muted">支払総額：{{ number_format($car->total_price ?? $car->price) }} 万円</div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        @empty
-        <p class="text-muted">現在、特選車はありません。</p>
-        @endforelse
-    </div>
-
-    <div class="text-end mt-3">
-        <a href="{{ route('cars.index') }}" class="btn btn-primary btn-lg">
-            在庫一覧を見る <i class="fa-solid fa-chevron-right ms-1"></i>
-        </a>
-    </div>
-</div>
--->
-
-
-
-{{-- =====================================
-      ④ お知らせ
-===================================== --}}
-<!-- 
- <div class="container mb-5">
-    <h2 class="section-title">お知らせ</h2>
-    <p class="section-sub text-center mb-5">キャンペーン・営業案内・新着情報などをお届けします。</p>
-
-    <div class="swiper newsSwiper">
-        <div class="swiper-wrapper">
-            @foreach($news as $item)
-            <div class="swiper-slide">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <div class="text-muted small mb-1">
-                            {{ optional($item->published_at)->format('Y/m/d') }}
-                        </div>
-                        <a href="{{ route('news.show', $item) }}" class="text-decoration-none text-dark">
-                            <h6 class="fw-bold">{{ $item->title }}</h6>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-        <div class="swiper-pagination mt-2"></div>
-    </div>
-
-    <div class="text-end mt-3">
-        <a href="{{ route('news.index') }}" class="btn btn-outline-primary">
-            お知らせ一覧を見る <i class="fa-solid fa-chevron-right ms-1"></i>
-        </a>
-    </div>
-</div>
-
--->
-
-
-{{-- =====================================
-      ⑤ 店舗案内（地図）
-===================================== --}}
-<section class="py-5 shop-section">
-    <div class="container">
-
-        <h2 class="section-title">STORE</h2>
-        <p class="section-sub text-center mb-5">実際におクルマをご覧いただける展示場を併設し、仕上げ品質にこだわった車両をご用意しております。</p>
-
-        <div class="row g-4 align-items-stretch">
-
-            <div class="col-md-6">
-                <div class="ratio ratio-4x3 rounded shadow-sm">
-                    <iframe
-                        src="https://www.google.com/maps?q=茨城県つくば市大井1440-48&output=embed"
-                        style="border:0;" allowfullscreen loading="lazy">
-                    </iframe>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <h5 class="fw-bold mb-3">株式会社カーフレンズツバサ</h5>
-
-                <dl class="row mb-3 small">
-                    <dt class="col-3 shop-info-label">所在地</dt>
-                    <dd class="col-9">〒300-1243<br>茨城県つくば市大井１４４０−４８</dd>
-
-                    <dt class="col-3 shop-info-label">電話</dt>
-                    <dd class="col-9">
-                        <a href="tel:0298799474" class="text-decoration-none text-dark fw-bold">029-879-9474</a>
-                    </dd>
-
-                    <dt class="col-3 shop-info-label">FAX</dt>
-                    <dd class="col-9">
-                        <a href="tel:0298799474" class="text-decoration-none text-dark fw-bold">029-879-9478</a>
-                    </dd>
-
-                    <dt class="col-3 shop-info-label">営業時間</dt>
-                    <dd class="col-9">10:00〜18:00</dd>
-
-                    <dt class="col-3 shop-info-label">定休日</dt>
-                    <dd class="col-9">火曜日・水曜日</dd>
-                </dl>
-
-                <div class="small text-muted">
-                    お越しの際は、事前にお電話またはお問い合わせフォーム(グーネット・カーセンサー)からご来店予約をお願いしております。
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-
-{{-- =====================================
-      ⑥ スタッフ紹介
-===================================== --}}
-<section class="py-5">
-    <div class="container">
-        <h2 class="section-title">STAFF</h2>
-        <p class="section-sub text-center mb-5">
-            お客様一人ひとりに寄り添う、カーフレンズツバサのスタッフです。
-        </p>
-
-        <div class="row justify-content-center g-4">
-
-            {{-- スタッフ1 --}}
-            <div class="col-md-4">
-                <div class="staff-card">
-                    <div class="staff-photo"
-                         style="background-image:url('/images/staff1.jpg')"></div>
-
-                    <div class="card-body">
-                        <h6 class="fw-bold mb-1">黒田　翼</h6>
-                        <div class="text-muted small mb-2">代表取締役</div>
-                        <p class="small mb-0">
-                            １０年落ち、１０万ｋｍ以上の車でも出来る限りきれいな車を販売します！これまでに北海道から沖縄の方に車の購入をして頂きましたので日本であれば全国どこでもお取引可能です！遠方の方で現車確認が難しい方は電話、ＴＶ電話、写真などを使用してご納得頂くまでご検討して頂ければと思います。
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            {{-- スタッフ2 --}}
-            <div class="col-md-4">
-                <div class="staff-card">
-                    <div class="staff-photo"
-                         style="background-image:url('/images/staff2.jpg')"></div>
-
-                    <div class="card-body">
-                        <h6 class="fw-bold mb-1">石山　陽右</h6>
-                        <div class="text-muted small mb-2">主任</div>
-                        <p class="small mb-0">
-                            たくさんのお客様と繋がり、一人でも多くの方に喜んでもらえるように車を販売していきます！「ここで買ってよかった」、「お買い得な買い物が出来た」と言ってもらえるように在庫車のクオリティも上げていきます！
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-
-{{-- =====================================
-      ⑦ 会社情報
-===================================== --}}
-<section class="py-5 company-section">
-    <div class="container">
-
-        <div class="row g-4 align-items-start">
-
-            <div class="col-md-6">
-                <h3 class="fw-bold mb-3"><span class="accent">株式会社カーフレンズツバサ</span> について</h3>
-                <p class="mb-3">私たちは、単に「車を販売する」だけではなく、お客様の人生に寄り添う「カーライフパートナー」でありたいと考えています。</p>
-                <p class="mb-3">ご購入前からご納車・整備・次のお乗り換えまで、長く安心してお付き合いいただけるようサポートいたします。</p>
-            </div>
-
-            <div class="col-md-6">
-                <table class="table table-borderless company-table small mb-0">
-                    <tbody>
-                        <tr><th>会社名</th><td>株式会社カーフレンズツバサ</td></tr>
-                        <tr><th>所在地</th><td>〒300-1243<br>茨城県つくば市大井１４４０−４８</td></tr>
-                        <tr><th>電話番号</th><td>029-879-9474</td></tr>
-                        <tr><th>FAX</th><td>029-879-9478</td></tr>
-                        <tr><th>事業内容</th><td>中古自動車販売 / 自動車買取 / 車検・点検・整備</td></tr>
-                        <tr><th>対応エリア</th><td>つくば市を中心に、茨城県全域・近隣エリア</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-
-
-{{-- =====================================
-      ⑧ CTA
-===================================== --}}
-<section class="py-5 text-center">
-    <div class="container">
-
-        <h3 class="fw-bold mb-3">
-            軽自動車の在庫一覧・購入は各ポータルサイトからご覧いただけます。
-        </h3>
-
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
-
-            {{-- グーネット --}}
-            <a href="https://www.goo-net.com/usedcar_shop/0401923/detail.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-lg px-4 fw-bold buy-cta-goo">
-
-                <i class="fa-solid fa-car me-2"></i>
-                購入はこちら（グーネット）
-                <i class="fa-solid fa-arrow-up-right-from-square ms-2 small"></i>
-            </a>
-
-            {{-- カーセンサー --}}
-            <a href="https://www.carsensor.net/shop/ibaraki/325043001/map/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-lg px-4 fw-bold buy-cta-cs">
-
-                <i class="fa-solid fa-car-side me-2"></i>
-                購入はこちら（カーセンサー）
-                <i class="fa-solid fa-arrow-up-right-from-square ms-2 small"></i>
-            </a>
-
-        </div>
-
-        <div class="small text-muted mt-3">
-            ※在庫状況は各ポータルサイトにて随時更新しております。
-        </div>
-
-    </div>
-</section>
-
+<div class="container" id="inventory"><div class="inventory-panel">
+ <div class="inventory-panel__intro"><div class="eyebrow" style="color:#f0cb78">STOCK</div><h2>販売中の軽自動車をチェック</h2><p>在庫・支払総額は各ポータルで随時更新しています。</p></div>
+ <div class="inventory-links">
+  <a class="inventory-link" href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><span><span class="inventory-link__name">グーネットで在庫を見る</span><span class="inventory-link__note">写真・車両情報・支払総額を確認</span></span><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+  <a class="inventory-link" href="https://www.carsensor.net/shop/ibaraki/325043001/stocklist/" target="_blank" rel="noopener noreferrer"><span><span class="inventory-link__name">カーセンサーで在庫を見る</span><span class="inventory-link__note">気になる車両を比較・問い合わせ</span></span><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+ </div>
+</div></div>
+
+<section class="home-section" id="quality"><div class="container">
+ <div class="eyebrow">OUR PROMISE</div><h2 class="section-heading">「価格以上の安心」を、<br>判断できる情報に。</h2>
+ <p class="section-lead">格安中古車で一番気になるのは「安い理由」と購入後のこと。車両の状態をできるだけ分かりやすくお伝えし、納得して選べる商談を大切にしています。</p>
+ <div class="promise-grid">
+  <article class="promise-card"><div class="promise-card__number">PROMISE 01</div><h3>状態を丁寧に説明</h3><p>年式や走行距離だけでは分からない状態、気になる点も含めてご説明します。</p></article>
+  <article class="promise-card"><div class="promise-card__number">PROMISE 02</div><h3>支払総額で比較</h3><p>各ポータルの支払総額を見ながら、予算に合う一台を比較できます。</p></article>
+  <article class="promise-card"><div class="promise-card__number">PROMISE 03</div><h3>写真・ビデオで確認</h3><p>遠方の方には、電話・ビデオ通話・追加写真で車両をご案内します。</p></article>
+  <article class="promise-card"><div class="promise-card__number">PROMISE 04</div><h3>購入後も相談できる</h3><p>販売だけでなく、車検・点検・整備・次のお乗り換えまでご相談いただけます。</p></article>
+ </div>
+ <div class="promise-note"><i class="fa-solid fa-circle-info me-2"></i>納車前整備や保証の内容は車両・販売条件により異なります。対象車の具体的な内容は商談時にスタッフへお尋ねください。</div>
+</div></section>
+
+<section class="home-section statement"><div class="container statement__inner">
+ <figure class="statement__figure mb-0"><img src="{{ asset('images/staff1.jpg') }}" alt="カーフレンズツバサ代表 黒田翼" loading="lazy"></figure>
+ <div><div class="eyebrow">MESSAGE</div><h2 class="section-heading">古いから、多走行だから。<br>それだけで決めつけません。</h2><blockquote>10年落ち、10万km以上の車でも、できる限りきれいに仕上げて販売します。</blockquote><p>低価格車には、一台ごとに違う個性があります。写真や数字だけでは伝わらない部分も含め、気になることを遠慮なく聞いていただける店でありたいと考えています。</p><div class="fw-bold">代表取締役　黒田 翼</div></div>
+</div></section>
+
+<section class="home-section" id="flow"><div class="container">
+ <div class="eyebrow">HOW TO BUY</div><h2 class="section-heading">気になる一台から、ご納車まで。</h2><p class="section-lead">初めて中古車を買う方も、遠方の方も、順を追ってご案内します。</p>
+ <div class="step-grid">
+  <article class="step"><h3>在庫を選ぶ</h3><p>グーネット・カーセンサーで気になる車両をご確認ください。</p></article>
+  <article class="step"><h3>相談・来店予約</h3><p>車両名を添えて、電話またはお問い合わせフォームからご連絡ください。</p></article>
+  <article class="step"><h3>状態・費用を確認</h3><p>現車または写真・ビデオ通話で状態を確認し、費用や手続きをご案内します。</p></article>
+  <article class="step"><h3>ご契約・ご納車</h3><p>必要書類やお支払いを確認し、準備完了後にお引き渡しします。</p></article>
+ </div>
+</div></section>
+
+<section class="home-section home-section--soft" id="nationwide"><div class="container"><div class="nationwide-box">
+ <div class="nationwide-box__copy"><div class="eyebrow">NATIONWIDE</div><h2 class="section-heading">北海道から沖縄まで、<br>全国販売に対応。</h2><p class="section-lead">現車を見に来られない方にも、ご納得いただけるまで車両をご案内します。</p>
+  <ul class="check-list"><li><i class="fa-solid fa-check"></i><span>電話・ビデオ通話によるオンライン車両確認</span></li><li><i class="fa-solid fa-check"></i><span>気になる箇所の追加写真にも対応</span></li><li><i class="fa-solid fa-check"></i><span>お住まいの地域に応じた手続き・納車方法をご案内</span></li></ul>
+  <a class="hero-btn hero-btn--primary" href="{{ route('contact.form') }}"><i class="fa-regular fa-comments"></i> 遠方購入について相談する</a>
+ </div><div class="nationwide-box__media" role="img" aria-label="カーフレンズツバサの展示車両"></div>
+</div></div></section>
+
+<section class="home-section" id="store"><div class="container">
+ <div class="eyebrow">STORE</div><h2 class="section-heading">つくば市大井の展示場で、<br>実際にお確かめください。</h2><p class="section-lead">ゆっくり車両をご覧いただくため、ご来店前の予約をおすすめしています。</p>
+ <div class="store-grid">
+  <div class="store-map"><iframe title="カーフレンズツバサ所在地" src="https://www.google.com/maps?q=茨城県つくば市大井1440-48&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+  <div class="store-card"><h3>株式会社カーフレンズツバサ</h3><dl class="store-info">
+   <div><dt>所在地</dt><dd>〒300-1243<br>茨城県つくば市大井1440-48</dd></div><div><dt>電話</dt><dd><a href="tel:0298799474">029-879-9474</a></dd></div><div><dt>営業時間</dt><dd>10:00〜18:00</dd></div><div><dt>定休日</dt><dd>火曜日・水曜日</dd></div><div><dt>事業内容</dt><dd>中古自動車販売／自動車買取／車検・点検・整備</dd></div>
+  </dl><div class="store-actions"><a href="tel:0298799474"><i class="fa-solid fa-phone"></i> 電話する</a><a href="{{ route('contact.form') }}"><i class="fa-regular fa-calendar-check"></i> 来店予約</a></div></div>
+ </div>
+</div></section>
+
+<section class="home-section home-section--soft" id="faq"><div class="container">
+ <div class="text-center"><div class="eyebrow">FAQ</div><h2 class="section-heading">よくあるご質問</h2></div>
+ <div class="accordion faq-wrap" id="homeFaq">
+  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">遠方からでも購入できますか？</button></h3><div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#homeFaq"><div class="accordion-body">はい、日本全国のお客様とのお取引に対応しています。電話・ビデオ通話・写真で車両をご確認いただき、地域に応じた手続きや納車方法をご案内します。</div></div></div>
+  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">10年落ち・10万km以上の車でも大丈夫ですか？</button></h3><div id="faq2" class="accordion-collapse collapse" data-bs-parent="#homeFaq"><div class="accordion-body">年式や走行距離だけで一概には判断できません。対象車の状態や整備内容、気になる点をご確認いただき、用途とご予算に合うか一緒に検討します。</div></div></div>
+  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">予約なしでも車を見られますか？</button></h3><div id="faq3" class="accordion-collapse collapse" data-bs-parent="#homeFaq"><div class="accordion-body">車両の移動や商談状況があるため、事前のご予約をおすすめしています。電話またはお問い合わせフォームから、気になる車両名と希望日時をお知らせください。</div></div></div>
+  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">車検や整備も相談できますか？</button></h3><div id="faq4" class="accordion-collapse collapse" data-bs-parent="#homeFaq"><div class="accordion-body">はい。中古車販売・買取のほか、車検・点検・整備も承っています。対応内容は車種や状態により異なるため、まずはお問い合わせください。</div></div></div>
+ </div>
+</div></section>
+
+<section class="final-cta"><div class="container"><h2>まずは、気になる一台を見つけてください。</h2><p class="mt-3 mb-4">在庫確認、車両状態、来店予約、遠方購入。分からないことからご相談いただけます。</p><div class="hero-actions"><a class="hero-btn hero-btn--primary" href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i> 最新の在庫を見る</a><a class="hero-btn hero-btn--light" href="{{ route('contact.form') }}"><i class="fa-regular fa-envelope"></i> お問い合わせ</a></div></div></section>
 @endsection
-
-
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script>
-/* ==========================
-   HERO (buddica寄り)
-   - fade + crossFade
-   - speedを上げてヌルっと
-   - KenBurnsを毎回確実に再始動
-========================== */
-const heroEl = document.querySelector(".heroSwiper");
-
-const heroSwiper = new Swiper(heroEl, {
-  loop: true,
-  effect: "fade",
-  fadeEffect: { crossFade: true },
-
-  speed: 2000, // ふわっと切り替え
-  autoplay: {
-    delay: 2000,
-    disableOnInteraction: false,
-    pauseOnMouseEnter: true,
-  },
-
-  pagination: {
-    el: ".heroSwiper .swiper-pagination",
-    clickable: true,
-  },
-
-  navigation: {
-    nextEl: ".heroSwiper .swiper-button-next",
-    prevEl: ".heroSwiper .swiper-button-prev",
-  },
-
-  // 触っても気持ちいい設定
-  grabCursor: true,
-  watchSlidesProgress: true,
-
-  on: {
-    init(swiper) {
-      restartKenBurns(swiper);
-    },
-    slideChangeTransitionStart(swiper) {
-      restartKenBurns(swiper);
-    },
-    resize(swiper) {
-      restartKenBurns(swiper);
-    }
-  }
-});
-
-/* KenBurnsの「毎回リスタート」用
-   CSSアニメは同じclassだと再始動しないことがあるので
-   animationを一度外して付け直す */
-function restartKenBurns(swiper) {
-  swiper.slides.forEach((slide) => {
-    const media = slide.querySelector(".hero-media");
-    if (!media) return;
-
-    // 一旦アニメを外して強制reflow
-    media.style.animation = "none";
-    media.offsetHeight; // reflow
-
-    // active slideだけ再付与（CSS側でも付くが保険で確実に）
-    if (slide.classList.contains("swiper-slide-active")) {
-      media.style.animation = "kenburns-media 6s ease-out both";
-    } else {
-      media.style.animation = "none";
-    }
-  });
-}
-
-
-
-/* お知らせ：存在するときだけ（安全） */
-if (document.querySelector(".newsSwiper")) {
-  new Swiper(".newsSwiper", {
-    loop: true,
-    slidesPerView: 1.2,
-    spaceBetween: 16,
-    autoplay: { delay: 3500, disableOnInteraction: false },
-    pagination: { el: ".newsSwiper .swiper-pagination", clickable: true },
-    breakpoints: {
-      768: { slidesPerView: 2.5 },
-      992: { slidesPerView: 3.5 }
-    }
-  });
-}
-
-</script>
-@endpush
