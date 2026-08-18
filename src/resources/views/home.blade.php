@@ -101,9 +101,9 @@ body{background:#fff;color:var(--cft-ink)}
 .nationwide-box__copy .section-lead,.nationwide-box__copy .check-list li{color:rgba(255,255,255,.72)}
 .nationwide-box__media{min-height:450px;clip-path:polygon(12% 0,100% 0,100% 100%,0 100%)}
 
-.store-grid{grid-template-columns:1.22fr .78fr;gap:0;align-items:start;margin-top:48px}
+.store-grid{grid-template-columns:minmax(0,1.22fr) minmax(360px,.78fr);gap:0;align-items:center;margin-top:48px}
 .store-map{min-height:520px;border-radius:0;box-shadow:none;clip-path:polygon(0 0,100% 0,94% 100%,0 100%)}
-.store-card{position:relative;z-index:2;margin:70px 0 0 -70px;padding:42px 38px;border-radius:0}
+.store-card{position:relative;z-index:2;margin:0 0 0 -56px;padding:42px 38px;border-radius:0}
 .store-actions a{border-radius:0}
 
 @media(max-width:991px){.promise-grid{grid-template-columns:1fr 1fr}.statement__inner,.nationwide-box,.store-grid{grid-template-columns:1fr}.statement__inner{gap:36px}.nationwide-box__media{min-height:300px;order:-1}.step-grid{grid-template-columns:1fr 1fr;gap:28px 0}.step:nth-child(3){padding-left:0;border:0}}
@@ -113,7 +113,7 @@ body{background:#fff;color:var(--cft-ink)}
   .inventory-panel__intro{border-right:0;border-bottom:1px solid #cdd7e0}
   .promise-layout{gap:50px}.promise-intro{position:static}.promise-note{grid-column:auto;margin-top:0}
   .nationwide-box__media{min-height:340px;order:-1;clip-path:none}
-  .store-map{clip-path:none}.store-card{margin:-36px 22px 0}.step-grid{grid-template-columns:1fr;gap:0;margin-left:0}
+  .store-map{clip-path:none}.store-card{margin:0}.step-grid{grid-template-columns:1fr;gap:0;margin-left:0}
 }
 @media(max-width:767px){
   .inventory-panel{margin-top:-22px}.inventory-panel__intro{padding:28px 22px}
@@ -122,7 +122,7 @@ body{background:#fff;color:var(--cft-ink)}
   .promise-card,.promise-card:nth-child(even){min-height:0;margin-left:0;padding:26px 66px 34px 0}
   .promise-card__number{font-size:2.8rem}
   .step,.step:nth-child(3){grid-template-columns:70px 1fr;padding:24px 0;border-top:1px solid #d5dde4}
-  .store-map{min-height:360px}.store-card{margin:-24px 12px 0;padding:30px 24px}
+  .store-map{min-height:360px}.store-card{margin:0;padding:30px 24px}
 }
 </style>
 @endpush
