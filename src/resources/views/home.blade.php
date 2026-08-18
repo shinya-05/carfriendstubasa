@@ -52,8 +52,78 @@ body{background:#fff;color:var(--cft-ink)}
 .store-info{display:grid;margin:0}.store-info div{display:grid;grid-template-columns:86px 1fr;gap:16px;padding:15px 0;border-top:1px solid rgba(255,255,255,.13)}.store-info dt{color:rgba(255,255,255,.58);font-size:.82rem}.store-info dd{margin:0;font-weight:700;line-height:1.7}.store-info a{color:#fff}.store-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.store-actions a{display:inline-flex;align-items:center;gap:7px;padding:12px 16px;border-radius:7px;background:#fff;color:var(--cft-navy);font-weight:900;text-decoration:none}
 .faq-wrap{max-width:900px;margin:36px auto 0;border-top:1px solid #dfe5eb}.accordion-item{border-bottom:1px solid #dfe5eb}.accordion-header{margin:0}.accordion-button{position:relative;width:100%;padding:22px 56px 22px 4px;border:0;background:transparent;color:var(--cft-ink);font-weight:900;text-align:left;cursor:pointer}.accordion-button:after{content:"+";position:absolute;right:8px;top:50%;width:32px;height:32px;display:grid;place-items:center;transform:translateY(-50%);border:1px solid #ccd6df;border-radius:50%;font-size:1.2rem;font-weight:400;transition:.25s}.accordion-button[aria-expanded="true"]{color:var(--cft-navy)}.accordion-button[aria-expanded="true"]:after{content:"−";transform:translateY(-50%) rotate(180deg);background:var(--cft-navy);color:#fff}.accordion-body{padding:0 56px 24px 4px;color:var(--cft-muted);line-height:1.9}
 .final-cta{padding:clamp(56px,8vw,90px) 0;background:linear-gradient(135deg,#0a294e,#123f6c);color:#fff;text-align:center}.final-cta h2{font-size:clamp(1.8rem,3.4vw,2.7rem);font-weight:900}.final-cta p{color:rgba(255,255,255,.77);line-height:1.9}.final-cta .hero-actions{justify-content:center}
+
+/* Editorial composition: deliberately avoids generic card grids. */
+.hero-btn{border-radius:0}
+.inventory-panel{
+  display:grid;grid-template-columns:.72fr 1.28fr;margin-top:-38px;
+  border:0;border-top:4px solid var(--cft-navy);border-bottom:1px solid #cdd7e0;
+  border-radius:0;box-shadow:none;overflow:visible
+}
+.inventory-panel__intro{padding:46px 38px;background:#fff;color:var(--cft-navy);border-right:1px solid #cdd7e0}
+.inventory-panel__intro h2{font-size:clamp(1.45rem,2.6vw,2rem)}
+.inventory-panel__intro p{color:var(--cft-muted)}
+.inventory-links{grid-template-columns:1fr}
+.inventory-link{min-height:108px;padding:24px 38px;border:0;border-bottom:1px solid #dfe5eb;transition:.3s var(--ease)}
+.inventory-link:last-child{border:0}.inventory-link:hover{padding-left:50px;background:#f4f7fa}
+
+.kinetic-strip{margin-top:70px;overflow:hidden;border-block:1px solid #d8e0e7;background:#fff;white-space:nowrap}
+.kinetic-track{display:inline-flex;width:max-content;animation:kinetic-loop 22s linear infinite}
+.kinetic-track span{padding:18px 32px;color:var(--cft-navy);font-family:Inter,sans-serif;font-size:.78rem;font-weight:900;letter-spacing:.16em}
+.kinetic-track span::after{content:"✦";margin-left:64px;color:var(--cft-gold)}
+@keyframes kinetic-loop{to{transform:translateX(-50%)}}
+
+.promise-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(50px,8vw,120px);align-items:start}
+.promise-intro{position:sticky;top:120px}
+.promise-grid{display:grid;grid-template-columns:1fr;gap:0;margin-top:0}
+.promise-card{
+  position:relative;min-height:210px;padding:34px 90px 46px 0;
+  border:0;border-top:1px solid #bfcbd5;border-radius:0;background:transparent
+}
+.promise-card:nth-child(even){margin-left:12%}
+.promise-card__number{
+  position:absolute;right:0;top:14px;color:rgba(9,41,79,.1);
+  font-family:Inter,sans-serif;font-size:clamp(2.8rem,5vw,4.8rem);font-weight:900;letter-spacing:-.06em
+}
+.promise-card h3{margin:0 0 13px;font-size:clamp(1.25rem,2vw,1.6rem)}
+.promise-card p{max-width:480px;font-size:.94rem;line-height:1.95}
+.promise-note{grid-column:2;margin-top:-30px;padding:15px 0;border:0;border-top:1px solid #e0c986;border-radius:0;background:transparent}
+
+.step-grid{display:grid;max-width:850px;margin:52px 0 0 auto;counter-reset:step}
+.step{display:grid;grid-template-columns:120px 1fr;padding:28px 0;border:0;border-top:1px solid #bdc9d3}
+.step:first-child{padding-left:0;border-top:1px solid #bdc9d3}
+.step::before{grid-row:1/3;margin:0;font-family:Inter,sans-serif;font-size:2rem}
+.step h3{margin:0 0 6px;font-size:1.2rem}.step p{font-size:.92rem}
+
+.nationwide-box{border-radius:0;box-shadow:none;background:var(--cft-navy);color:#fff}
+.nationwide-box__copy{padding:clamp(46px,6vw,82px)}
+.nationwide-box__copy .eyebrow{color:#f0cb78}
+.nationwide-box__copy .section-lead,.nationwide-box__copy .check-list li{color:rgba(255,255,255,.72)}
+.nationwide-box__media{min-height:450px;clip-path:polygon(12% 0,100% 0,100% 100%,0 100%)}
+
+.store-grid{grid-template-columns:1.22fr .78fr;gap:0;align-items:start;margin-top:48px}
+.store-map{min-height:520px;border-radius:0;box-shadow:none;clip-path:polygon(0 0,100% 0,94% 100%,0 100%)}
+.store-card{position:relative;z-index:2;margin:70px 0 0 -70px;padding:42px 38px;border-radius:0}
+.store-actions a{border-radius:0}
+
 @media(max-width:991px){.promise-grid{grid-template-columns:1fr 1fr}.statement__inner,.nationwide-box,.store-grid{grid-template-columns:1fr}.statement__inner{gap:36px}.nationwide-box__media{min-height:300px;order:-1}.step-grid{grid-template-columns:1fr 1fr;gap:28px 0}.step:nth-child(3){padding-left:0;border:0}}
 @media(max-width:767px){.home-hero{min-height:760px;background-position:58% center}.home-hero:before{background:rgba(4,19,36,.76)}.home-hero__content{padding-top:118px}.hero-actions{display:grid}.hero-btn{width:100%}.inventory-panel{margin-top:-34px}.inventory-panel__intro{padding:22px}.inventory-links,.promise-grid,.step-grid{grid-template-columns:1fr}.inventory-link{min-height:100px;padding:20px 22px;border-right:0;border-bottom:1px solid #e7ebef}.step,.step:nth-child(3){padding:20px 0;border-left:0;border-top:1px solid #dfe5eb}.step:first-child{border-top:0}.statement__figure img{height:320px}.store-map{min-height:330px}.store-card{padding:26px 22px}}
+@media(max-width:991px){
+  .inventory-panel,.promise-layout,.promise-grid,.statement__inner,.nationwide-box,.store-grid{grid-template-columns:1fr}
+  .inventory-panel__intro{border-right:0;border-bottom:1px solid #cdd7e0}
+  .promise-layout{gap:50px}.promise-intro{position:static}.promise-note{grid-column:auto;margin-top:0}
+  .nationwide-box__media{min-height:340px;order:-1;clip-path:none}
+  .store-map{clip-path:none}.store-card{margin:-36px 22px 0}.step-grid{grid-template-columns:1fr;gap:0;margin-left:0}
+}
+@media(max-width:767px){
+  .inventory-panel{margin-top:-22px}.inventory-panel__intro{padding:28px 22px}
+  .inventory-link{min-height:96px;padding:20px 22px}.inventory-link:hover{padding-left:28px}
+  .kinetic-strip{margin-top:48px}
+  .promise-card,.promise-card:nth-child(even){min-height:0;margin-left:0;padding:26px 66px 34px 0}
+  .promise-card__number{font-size:2.8rem}
+  .step,.step:nth-child(3){grid-template-columns:70px 1fr;padding:24px 0;border-top:1px solid #d5dde4}
+  .store-map{min-height:360px}.store-card{margin:-24px 12px 0;padding:30px 24px}
+}
 </style>
 @endpush
 
@@ -80,9 +150,17 @@ body{background:#fff;color:var(--cft-ink)}
  </div>
 </div></div>
 
+<div class="kinetic-strip" aria-hidden="true">
+ <div class="kinetic-track">
+  <span>LOW PRICE, HONEST CONDITION</span><span>KEI CAR SPECIALIST</span><span>TSUKUBA TO NATIONWIDE</span>
+  <span>LOW PRICE, HONEST CONDITION</span><span>KEI CAR SPECIALIST</span><span>TSUKUBA TO NATIONWIDE</span>
+ </div>
+</div>
+
 <section class="home-section" id="quality"><div class="container">
- <div class="eyebrow">OUR PROMISE</div><h2 class="section-heading">「価格以上の安心」を、<br>判断できる情報に。</h2>
- <p class="section-lead">格安中古車で一番気になるのは「安い理由」と購入後のこと。車両の状態をできるだけ分かりやすくお伝えし、納得して選べる商談を大切にしています。</p>
+ <div class="promise-layout">
+ <div class="promise-intro"><div class="eyebrow">OUR PROMISE</div><h2 class="section-heading">「価格以上の安心」を、<br>判断できる情報に。</h2>
+ <p class="section-lead">格安中古車で一番気になるのは「安い理由」と購入後のこと。車両の状態をできるだけ分かりやすくお伝えし、納得して選べる商談を大切にしています。</p></div>
  <div class="promise-grid">
   <article class="promise-card"><div class="promise-card__number">PROMISE 01</div><h3>状態を丁寧に説明</h3><p>年式や走行距離だけでは分からない状態、気になる点も含めてご説明します。</p></article>
   <article class="promise-card"><div class="promise-card__number">PROMISE 02</div><h3>支払総額で比較</h3><p>各ポータルの支払総額を見ながら、予算に合う一台を比較できます。</p></article>
@@ -90,6 +168,7 @@ body{background:#fff;color:var(--cft-ink)}
   <article class="promise-card"><div class="promise-card__number">PROMISE 04</div><h3>購入後も相談できる</h3><p>販売だけでなく、車検・点検・整備・次のお乗り換えまでご相談いただけます。</p></article>
  </div>
  <div class="promise-note"><i class="fa-solid fa-circle-info me-2"></i>納車前整備や保証の内容は車両・販売条件により異なります。対象車の具体的な内容は商談時にスタッフへお尋ねください。</div>
+</div>
 </div></section>
 
 <section class="home-section statement"><div class="container statement__inner">
