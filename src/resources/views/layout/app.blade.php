@@ -282,6 +282,7 @@
     }
 
     .mobile-action-bar{ display:none; }
+    .cft-nav:not(.is-scrolled) .navbar-nav .nav-link{ color:rgba(255,255,255,.94) !important; }
 
     @media (max-width: 991px){
         .cft-nav .navbar-brand img{ height:58px !important; }
