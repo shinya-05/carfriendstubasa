@@ -2,9 +2,17 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'カーフレンズツバサ')</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'カーフレンズツバサ')</title>
+    <meta name="description" content="@yield('meta_description', '茨城県つくば市の軽自動車専門店カーフレンズツバサ。中古車販売・買取・車検・点検・整備に対応します。')">
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:site_name" content="カーフレンズツバサ">
+    <meta property="og:title" content="@yield('title', 'カーフレンズツバサ')">
+    <meta property="og:description" content="@yield('meta_description', '茨城県つくば市の軽自動車専門店カーフレンズツバサ。')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('images/hero2.jpg') }}">
 
     @if(config('services.google_analytics.measurement_id'))
         <!-- Google tag (gtag.js) -->
@@ -273,14 +281,63 @@
     }
     }
 
+    .mobile-action-bar{ display:none; }
+
+    @media (max-width: 991px){
+        .cft-nav .navbar-brand img{ height:58px !important; }
+        .cft-nav .navbar-collapse.show,
+        .cft-nav .navbar-collapse.collapsing{
+            margin-top:10px;
+            padding:14px 18px;
+            border-radius:10px;
+            background:rgba(255,255,255,.98);
+            box-shadow:0 14px 32px rgba(0,0,0,.18);
+        }
+        .cft-nav .navbar-collapse.show .nav-link,
+        .cft-nav .navbar-collapse.collapsing .nav-link{ color:#0B2C56 !important; }
+    }
+
+    @media (max-width: 767px){
+        body{ padding-bottom:68px; }
+        .mobile-action-bar{
+            position:fixed;
+            z-index:10000;
+            left:0;
+            right:0;
+            bottom:0;
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            min-height:68px;
+            padding-bottom:env(safe-area-inset-bottom);
+            background:#fff;
+            border-top:1px solid #dce2e8;
+            box-shadow:0 -8px 24px rgba(9,41,79,.13);
+        }
+        .mobile-action-bar a{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:4px;
+            color:#0B2C56;
+            font-size:.75rem;
+            font-weight:900;
+            text-decoration:none;
+            border-right:1px solid #e8edf1;
+        }
+        .mobile-action-bar a:last-child{ border-right:0; background:#c9272c; color:#fff; }
+        .mobile-action-bar i{ font-size:1.05rem; }
+    }
+
     </style>
 
+    @stack('head')
     @stack('styles')
 </head>
-<body>
+<body class="{{ request()->is('/') ? 'is-home' : 'is-inner' }}">
 
 {{-- ナビゲーション --}}
-<nav class="navbar navbar-expand-lg cft-nav fixed-top py-3">
+<nav class="navbar navbar-expand-lg cft-nav fixed-top py-3 {{ request()->is('/') ? '' : 'is-scrolled' }}">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img src="{{ asset('images/logo.jpg') }}"
@@ -300,6 +357,11 @@
                     <a class="nav-link {{ request()->is('/') ? 'text-primary' : '' }}"
                        href="/">HOME</a>
                 </li>
+                @if(request()->is('/'))
+                <li class="nav-item"><a class="nav-link" href="#inventory">STOCK</a></li>
+                <li class="nav-item"><a class="nav-link" href="#quality">QUALITY</a></li>
+                <li class="nav-item"><a class="nav-link" href="#store">STORE</a></li>
+                @endif
 <!--
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('cars*') ? 'text-primary' : '' }}"
@@ -372,6 +434,8 @@
           <div class="footer-desc">
             軽自動車専門のロープライス車を中心に、仕入れ・整備・販売まで一貫してご提供します。<br>
             “価格以上の安心” をお届けします。
+            <div class="mt-3">〒300-1243 茨城県つくば市大井1440-48<br>
+            <a class="text-white" href="tel:0298799474">TEL 029-879-9474</a> ／ 10:00〜18:00（火・水曜定休）</div>
           </div>
 
           <div class="footer-social">
@@ -383,6 +447,13 @@
         <div class="col-lg-7">
           <div class="footer-nav">
             
+
+            <div>
+              <h6>STOCK</h6>
+              <a href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer">グーネット在庫</a>
+              <a href="https://www.carsensor.net/shop/ibaraki/325043001/stocklist/" target="_blank" rel="noopener noreferrer">カーセンサー在庫</a>
+              <a href="{{ url('/#store') }}">店舗案内</a>
+            </div>
 
             <div>
               <h6>COMPANY</h6>
@@ -408,7 +479,7 @@
   <div class="footer-bottom">
     <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
       <div>© {{ date('Y') }} Car Friends Tsubasa</div>
-      <div>茨城県土浦市 / 中古車販売・買取・整備</div>
+      <div>茨城県つくば市 / 中古車販売・買取・整備</div>
     </div>
   </div>
 </footer>
@@ -417,28 +488,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('floatingAssessmentBtn');
-    const showPoint = 300; // スクロール量
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > showPoint) {
-            btn.classList.remove('floating-cta--hidden');
-            btn.classList.add('floating-cta--show');
-        } else {
-            btn.classList.remove('floating-cta--show');
-            btn.classList.add('floating-cta--hidden');
-        }
-    });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('.cft-nav');
   if (!nav) return;
 
   const threshold = 40;
   const onScroll = () => {
-    nav.classList.toggle('is-scrolled', window.scrollY > threshold);
+    nav.classList.toggle('is-scrolled', document.body.classList.contains('is-inner') || window.scrollY > threshold);
   };
   onScroll();
   window.addEventListener('scroll', onScroll);
@@ -496,13 +551,11 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 @endif
 
-{{-- スクロール表示：買取査定CTA --}}
-<a href="{{ route('assessment.form') }}" 
-   class="floating-cta floating-cta--hidden"
-   id="floatingAssessmentBtn">
-    <i class="fa-solid fa-car-side me-2"></i>
-    買取査定（軽自動車限定）はこちら
-</a>
+<nav class="mobile-action-bar" aria-label="お問い合わせメニュー">
+    <a href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i><span>在庫</span></a>
+    <a href="tel:0298799474"><i class="fa-solid fa-phone"></i><span>電話</span></a>
+    <a href="{{ route('contact.form') }}"><i class="fa-regular fa-calendar-check"></i><span>来店相談</span></a>
+</nav>
 
 
 </body>
