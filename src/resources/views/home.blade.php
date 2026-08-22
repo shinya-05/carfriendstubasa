@@ -138,7 +138,7 @@ body{background:#fff;color:var(--cft-ink)}
    <a class="hero-btn hero-btn--light" href="{{ route('contact.form') }}"><i class="fa-regular fa-calendar-check"></i> 来店・車両相談をする</a>
    <a class="hero-btn hero-btn--light" href="tel:0298799474"><i class="fa-solid fa-phone"></i> 029-879-9474</a>
   </div>
-  <div class="hero-facts"><span><i class="fa-solid fa-circle-check"></i> 軽自動車に特化</span><span><i class="fa-solid fa-circle-check"></i> 全国販売に対応</span><span><i class="fa-solid fa-clock"></i> 10:00〜18:00／火・水曜定休</span></div>
+  <div class="hero-facts"><span><i class="fa-solid fa-car-side"></i> 軽自動車在庫50台以上</span><span><i class="fa-solid fa-yen-sign"></i> 総額60万円以内中心</span><span><i class="fa-solid fa-circle-check"></i> 全国販売に対応</span><span><i class="fa-solid fa-clock"></i> 10:00〜18:00／火・水曜定休</span></div>
  </div></div>
 </section>
 
