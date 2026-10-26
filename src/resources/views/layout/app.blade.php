@@ -69,7 +69,6 @@
                 </div>
             </details>
             <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer">OFFICIAL LINE</a>
-            <a href="{{ route('assessment.form') }}">ASSESSMENT</a>
         </nav>
     </div>
 </header>
@@ -115,7 +114,6 @@
                 <div>
                     <h6>SUPPORT</h6>
                     <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer">公式LINE</a>
-                    <a href="{{ route('assessment.form') }}">買取査定</a>
                     <a href="{{ route('privacy-policy') }}">プライバシーポリシー</a>
                 </div>
             </div>
