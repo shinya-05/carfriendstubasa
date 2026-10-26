@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\CompanyController;
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -42,11 +41,6 @@ Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
 
 /* お問い合わせは公式LINEへ */
 Route::redirect('/contact', 'https://lin.ee/9HpcWaL')->name('contact.form');
-
-/* 買取査定（任意） */
-Route::get('/assessment', [AssessmentController::class, 'showForm'])->name('assessment.form');
-Route::post('/assessment/submit', [AssessmentController::class, 'submit'])->name('assessment.submit');
-
 
 /*
 |--------------------------------------------------------------------------
