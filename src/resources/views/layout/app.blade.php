@@ -113,7 +113,7 @@
                     <a href="{{ route('company.history') }}">沿革</a>
                 </div>
                 <div>
-                    <h6>CONTACT</h6>
+                    <h6>SUPPORT</h6>
                     <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer">公式LINE</a>
                     <a href="{{ route('assessment.form') }}">買取査定</a>
                     <a href="{{ route('privacy-policy') }}">プライバシーポリシー</a>
@@ -129,7 +129,7 @@
     </div>
 </footer>
 
-<nav class="mobile-action-bar" aria-label="お問い合わせメニュー">
+<nav class="mobile-action-bar" aria-label="クイックメニュー">
     <a href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i><span>在庫</span></a>
     <a href="tel:0298799474"><i class="fa-solid fa-phone"></i><span>電話</span></a>
     <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-line"></i><span>LINE</span></a>
