@@ -21,4 +21,4 @@ if [ "$LOCAL_SHA" = "$REMOTE_SHA" ]; then
 fi
 
 echo "$(date '+%Y-%m-%d %H:%M:%S') Deploying $LOCAL_SHA -> $REMOTE_SHA"
-/bin/bash "$APP_DIR/deploy.sh"
+/bin/bash "$APP_DIR/scripts/xserver-deploy.sh"

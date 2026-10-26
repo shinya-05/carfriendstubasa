@@ -198,4 +198,10 @@ return [
 
     'same_site' => 'lax',
 
+    /*
+    | Store session payloads as JSON to avoid PHP object deserialization.
+    | This invalidates existing sessions once when the upgrade is deployed.
+    */
+    'serialization' => 'json',
+
 ];
