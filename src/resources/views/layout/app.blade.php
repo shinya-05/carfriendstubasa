@@ -68,7 +68,7 @@
                     <a href="{{ route('company.history') }}">沿革</a>
                 </div>
             </details>
-            <a href="{{ route('contact.form') }}">CONTACT</a>
+            <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer">OFFICIAL LINE</a>
             <a href="{{ route('assessment.form') }}">ASSESSMENT</a>
         </nav>
     </div>
@@ -95,6 +95,7 @@
                 <div class="footer-social">
                     <a href="https://youtube.com/@carfriendstsubasa3350?si=W3CV3O9fj8GPVvHy" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
                     <a href="https://www.instagram.com/car_friends_tsubasa?igsh=MWpxdjYwYnRuaTdqOQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer" aria-label="公式LINE"><i class="fa-brands fa-line"></i></a>
                 </div>
             </div>
             <div class="footer-nav">
@@ -113,7 +114,7 @@
                 </div>
                 <div>
                     <h6>CONTACT</h6>
-                    <a href="{{ route('contact.form') }}">お問い合わせ</a>
+                    <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer">公式LINE</a>
                     <a href="{{ route('assessment.form') }}">買取査定</a>
                     <a href="{{ route('privacy-policy') }}">プライバシーポリシー</a>
                 </div>
@@ -131,7 +132,7 @@
 <nav class="mobile-action-bar" aria-label="お問い合わせメニュー">
     <a href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i><span>在庫</span></a>
     <a href="tel:0298799474"><i class="fa-solid fa-phone"></i><span>電話</span></a>
-    <a href="{{ route('contact.form') }}"><i class="fa-regular fa-calendar-check"></i><span>来店相談</span></a>
+    <a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-line"></i><span>LINE</span></a>
 </nav>
 
 @stack('scripts')
