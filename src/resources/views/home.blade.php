@@ -135,7 +135,7 @@ body{background:#fff;color:var(--cft-ink)}
   <p class="home-hero__lead">低価格の軽自動車だからこそ、状態を丁寧にお伝えします。価格だけで決めず、納得して選べる一台を一緒に探します。</p>
   <div class="hero-actions">
    <a class="hero-btn hero-btn--primary" href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i> 最新の在庫を見る</a>
-   <a class="hero-btn hero-btn--light" href="{{ route('contact.form') }}"><i class="fa-regular fa-calendar-check"></i> 来店・車両相談をする</a>
+   <a class="hero-btn hero-btn--light" href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer"><i class="fa-regular fa-calendar-check"></i> 公式LINEで相談する</a>
   </div>
   <div class="hero-facts"><span><i class="fa-solid fa-car-side"></i> 軽自動車在庫50台以上</span><span><i class="fa-solid fa-yen-sign"></i> 総額60万円以内中心</span><span><i class="fa-solid fa-circle-check"></i> 全国販売に対応</span><span><i class="fa-solid fa-clock"></i> 10:00〜18:00／火・水曜定休</span></div>
  </div></div>
@@ -179,7 +179,7 @@ body{background:#fff;color:var(--cft-ink)}
  <div class="eyebrow">HOW TO BUY</div><h2 class="section-heading">気になる一台から、ご納車まで。</h2><p class="section-lead">初めて中古車を買う方も、遠方の方も、順を追ってご案内します。</p>
  <div class="step-grid">
   <article class="step"><h3>在庫を選ぶ</h3><p>グーネット・カーセンサーで気になる車両をご確認ください。</p></article>
-  <article class="step"><h3>相談・来店予約</h3><p>車両名を添えて、電話またはお問い合わせフォームからご連絡ください。</p></article>
+  <article class="step"><h3>相談・公式LINEで来店予約</h3><p>車両名を添えて、電話または公式LINEからご連絡ください。</p></article>
   <article class="step"><h3>状態・費用を確認</h3><p>現車または写真・ビデオ通話で状態を確認し、費用や手続きをご案内します。</p></article>
   <article class="step"><h3>ご契約・ご納車</h3><p>必要書類やお支払いを確認し、準備完了後にお引き渡しします。</p></article>
  </div>
@@ -188,7 +188,7 @@ body{background:#fff;color:var(--cft-ink)}
 <section class="home-section home-section--soft" id="nationwide"><div class="container"><div class="nationwide-box">
  <div class="nationwide-box__copy"><div class="eyebrow">NATIONWIDE</div><h2 class="section-heading">北海道から沖縄まで、<br>全国販売に対応。</h2><p class="section-lead">現車を見に来られない方にも、ご納得いただけるまで車両をご案内します。</p>
   <ul class="check-list"><li><i class="fa-solid fa-check"></i><span>電話・ビデオ通話によるオンライン車両確認</span></li><li><i class="fa-solid fa-check"></i><span>気になる箇所の追加写真にも対応</span></li><li><i class="fa-solid fa-check"></i><span>お住まいの地域に応じた手続き・納車方法をご案内</span></li></ul>
-  <a class="hero-btn hero-btn--primary" href="{{ route('contact.form') }}"><i class="fa-regular fa-comments"></i> 遠方購入について相談する</a>
+  <a class="hero-btn hero-btn--primary" href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer"><i class="fa-regular fa-comments"></i> 公式LINEで遠方購入を相談</a>
  </div><div class="nationwide-box__media" role="img" aria-label="カーフレンズツバサの展示車両"></div>
 </div></div></section>
 
@@ -198,7 +198,7 @@ body{background:#fff;color:var(--cft-ink)}
   <div class="store-map"><iframe title="カーフレンズツバサ所在地" src="https://www.google.com/maps?q=茨城県つくば市大井1440-48&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
   <div class="store-card"><h3>株式会社カーフレンズツバサ</h3><dl class="store-info">
    <div><dt>所在地</dt><dd>〒300-1243<br>茨城県つくば市大井1440-48</dd></div><div><dt>電話</dt><dd><a href="tel:0298799474">029-879-9474</a></dd></div><div><dt>営業時間</dt><dd>10:00〜18:00</dd></div><div><dt>定休日</dt><dd>火曜日・水曜日</dd></div><div><dt>事業内容</dt><dd>中古自動車販売／自動車買取／車検・点検・整備</dd></div>
-  </dl><div class="store-actions"><a href="tel:0298799474"><i class="fa-solid fa-phone"></i> 電話する</a><a href="{{ route('contact.form') }}"><i class="fa-regular fa-calendar-check"></i> 来店予約</a></div></div>
+  </dl><div class="store-actions"><a href="tel:0298799474"><i class="fa-solid fa-phone"></i> 電話する</a><a href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer"><i class="fa-regular fa-calendar-check"></i> 公式LINEで来店予約</a></div></div>
  </div>
 </div></section>
 
@@ -207,10 +207,10 @@ body{background:#fff;color:var(--cft-ink)}
  <div class="accordion faq-wrap" id="homeFaq" data-accordion>
   <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="true" aria-controls="faq1" data-accordion-button>遠方からでも購入できますか？</button></h3><div id="faq1"><div class="accordion-body">はい、日本全国のお客様とのお取引に対応しています。電話・ビデオ通話・写真で車両をご確認いただき、地域に応じた手続きや納車方法をご案内します。</div></div></div>
   <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="false" aria-controls="faq2" data-accordion-button>10年落ち・10万km以上の車でも大丈夫ですか？</button></h3><div id="faq2" hidden><div class="accordion-body">年式や走行距離だけで一概には判断できません。対象車の状態や整備内容、気になる点をご確認いただき、用途とご予算に合うか一緒に検討します。</div></div></div>
-  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="false" aria-controls="faq3" data-accordion-button>予約なしでも車を見られますか？</button></h3><div id="faq3" hidden><div class="accordion-body">車両の移動や商談状況があるため、事前のご予約をおすすめしています。電話またはお問い合わせフォームから、気になる車両名と希望日時をお知らせください。</div></div></div>
-  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="false" aria-controls="faq4" data-accordion-button>車検や整備も相談できますか？</button></h3><div id="faq4" hidden><div class="accordion-body">はい。中古車販売・買取のほか、車検・点検・整備も承っています。対応内容は車種や状態により異なるため、まずはお問い合わせください。</div></div></div>
+  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="false" aria-controls="faq3" data-accordion-button>予約なしでも車を見られますか？</button></h3><div id="faq3" hidden><div class="accordion-body">車両の移動や商談状況があるため、事前のご予約をおすすめしています。電話または公式LINEから、気になる車両名と希望日時をお知らせください。</div></div></div>
+  <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="false" aria-controls="faq4" data-accordion-button>車検や整備も相談できますか？</button></h3><div id="faq4" hidden><div class="accordion-body">はい。中古車販売・買取のほか、車検・点検・整備も承っています。対応内容は車種や状態により異なるため、まずは公式LINEからご相談ください。</div></div></div>
  </div>
 </div></section>
 
-<section class="final-cta"><div class="container"><h2>まずは、気になる一台を見つけてください。</h2><p class="mt-3 mb-4">在庫確認、車両状態、来店予約、遠方購入。分からないことからご相談いただけます。</p><div class="hero-actions"><a class="hero-btn hero-btn--primary" href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i> 最新の在庫を見る</a><a class="hero-btn hero-btn--light" href="{{ route('contact.form') }}"><i class="fa-regular fa-envelope"></i> お問い合わせ</a></div></div></section>
+<section class="final-cta"><div class="container"><h2>まずは、気になる一台を見つけてください。</h2><p class="mt-3 mb-4">在庫確認、車両状態、公式LINEで来店予約、遠方購入。分からないことからご相談いただけます。</p><div class="hero-actions"><a class="hero-btn hero-btn--primary" href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-car"></i> 最新の在庫を見る</a><a class="hero-btn hero-btn--light" href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-line"></i> 公式LINEで相談</a></div></div></section>
 @endsection
