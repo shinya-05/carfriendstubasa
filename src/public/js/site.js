@@ -48,7 +48,7 @@
   updateScroll();
 
   const revealTargets = document.querySelectorAll(
-    '.section-heading, .section-lead, .promise-card, .statement__figure, .statement__inner > div, .step, .nationwide-box, .store-map, .store-card, .faq-wrap, .inventory-panel, .final-cta h2, .final-cta p, .final-cta .hero-actions, .is-inner main > *'
+    '.section-heading, .section-lead, .promise-card, .statement__figure, .statement__inner > div, .step, .nationwide-box, .review-source, .reviews-intro__note, .store-map, .store-card, .faq-wrap, .inventory-panel, .final-cta h2, .final-cta p, .final-cta .hero-actions, .is-inner main > *'
   );
   revealTargets.forEach((element, index) => {
     element.dataset.reveal = '';
@@ -69,7 +69,7 @@
     revealTargets.forEach(element => element.classList.add('is-visible'));
   }
 
-  document.querySelectorAll('.promise-card, .inventory-link, .store-card').forEach(card => {
+  document.querySelectorAll('.promise-card, .inventory-link, .review-source, .store-card').forEach(card => {
     card.dataset.tilt = '';
     if (reducedMotion) return;
     card.addEventListener('pointermove', event => {
@@ -113,6 +113,7 @@
     if (!link || typeof window.gtag !== 'function') return;
     const href = link.href;
     if (href.startsWith('tel:')) window.gtag('event', 'click_to_call', { link_url: href, link_text: link.textContent.trim() });
+    else if ((href.includes('goo-net.com/user_review/') || href.includes('carsensor.net/shop/') && href.includes('/review/'))) window.gtag('event', 'outbound_review_click', { destination: href.includes('goo-net.com') ? 'goo_net' : 'carsensor', link_url: href });
     else if (href.includes('goo-net.com')) window.gtag('event', 'outbound_inventory_click', { destination: 'goo_net', link_url: href });
     else if (href.includes('carsensor.net')) window.gtag('event', 'outbound_inventory_click', { destination: 'carsensor', link_url: href });
     else if (href.includes('instagram.com') || href.includes('youtube.com')) window.gtag('event', 'social_click', { destination: href.includes('instagram.com') ? 'instagram' : 'youtube', link_url: href });

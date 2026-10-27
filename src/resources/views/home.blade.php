@@ -106,7 +106,26 @@ body{background:#fff;color:var(--cft-ink)}
 .store-card{position:relative;z-index:2;margin:0 0 0 -56px;padding:42px 38px;border-radius:0}
 .store-actions a{border-radius:0}
 
-@media(max-width:991px){.promise-grid{grid-template-columns:1fr 1fr}.statement__inner,.nationwide-box,.store-grid{grid-template-columns:1fr}.statement__inner{gap:36px}.nationwide-box__media{min-height:300px;order:-1}.step-grid{grid-template-columns:1fr 1fr;gap:28px 0}.step:nth-child(3){padding-left:0;border:0}}
+.reviews-section{overflow:hidden;background:#eef2f5}
+.reviews-layout{display:grid;grid-template-columns:.7fr 1.3fr;gap:clamp(48px,8vw,118px);align-items:start}
+.reviews-intro{position:sticky;top:118px}
+.reviews-intro__note{max-width:390px;margin-top:28px;padding-top:18px;border-top:1px solid #c8d2db;color:var(--cft-muted);font-size:.82rem;line-height:1.8}
+.review-sources{border-bottom:1px solid #bfcbd5}
+.review-source{position:relative;display:grid;grid-template-columns:145px 1fr 46px;gap:24px;align-items:center;padding:34px 0;border-top:1px solid #bfcbd5;color:var(--cft-ink);text-decoration:none;transition:padding .35s var(--ease),background .35s var(--ease)}
+.review-source:nth-child(even){margin-left:10%}
+.review-source::before{content:"";position:absolute;inset:0 -28px;z-index:0;background:#fff;transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.review-source:hover::before{transform:scaleX(1);transform-origin:left}
+.review-source > *{position:relative;z-index:1}
+.review-source__brand{font-family:Inter,sans-serif;font-size:.8rem;font-weight:900;letter-spacing:.08em}
+.review-source__score{display:flex;align-items:baseline;gap:20px}
+.review-source__rating{color:var(--cft-navy);font-family:Inter,sans-serif;font-size:clamp(3rem,6vw,5.4rem);font-weight:900;letter-spacing:-.07em;line-height:1}
+.review-source__rating small{margin-left:5px;color:var(--cft-muted);font-size:.78rem!important;letter-spacing:0}
+.review-source__stars{color:var(--cft-gold);font-size:.82rem;letter-spacing:.06em}
+.review-source__meta{display:flex;flex-wrap:wrap;gap:5px 18px;margin-top:9px;color:var(--cft-muted);font-size:.86rem}
+.review-source__arrow{width:44px;height:44px;display:grid;place-items:center;border:1px solid #bfcbd5;border-radius:50%;color:var(--cft-navy);transition:.3s var(--ease)}
+.review-source:hover .review-source__arrow{transform:rotate(45deg);border-color:var(--cft-navy);background:var(--cft-navy);color:#fff}
+
+@media(max-width:991px){.promise-grid{grid-template-columns:1fr 1fr}.statement__inner,.nationwide-box,.store-grid,.reviews-layout{grid-template-columns:1fr}.statement__inner{gap:36px}.nationwide-box__media{min-height:300px;order:-1}.step-grid{grid-template-columns:1fr 1fr;gap:28px 0}.step:nth-child(3){padding-left:0;border:0}.reviews-intro{position:static}}
 @media(max-width:767px){.home-hero{min-height:760px;background-position:58% center}.home-hero:before{background:rgba(4,19,36,.76)}.home-hero__content{padding-top:118px}.hero-actions{display:grid}.hero-btn{width:100%}.inventory-panel{margin-top:-34px}.inventory-panel__intro{padding:22px}.inventory-links,.promise-grid,.step-grid{grid-template-columns:1fr}.inventory-link{min-height:100px;padding:20px 22px;border-right:0;border-bottom:1px solid #e7ebef}.step,.step:nth-child(3){padding:20px 0;border-left:0;border-top:1px solid #dfe5eb}.step:first-child{border-top:0}.statement__figure img{height:320px}.store-map{min-height:330px}.store-card{padding:26px 22px}}
 @media(max-width:991px){
   .inventory-panel,.promise-layout,.promise-grid,.statement__inner,.nationwide-box,.store-grid{grid-template-columns:1fr}
@@ -122,6 +141,7 @@ body{background:#fff;color:var(--cft-ink)}
   .promise-card,.promise-card:nth-child(even){min-height:0;margin-left:0;padding:26px 66px 34px 0}
   .promise-card__number{font-size:2.8rem}
   .step,.step:nth-child(3){grid-template-columns:70px 1fr;padding:24px 0;border-top:1px solid #d5dde4}
+  .review-source,.review-source:nth-child(even){grid-template-columns:1fr 42px;gap:16px;margin-left:0;padding:28px 0}.review-source__brand{grid-column:1/-1}.review-source__score{display:block}.review-source__meta{display:grid;gap:3px}.review-source__arrow{grid-column:2;grid-row:2;width:40px;height:40px}
   .store-map{min-height:360px}.store-card{margin:0;padding:30px 24px}
 }
 </style>
@@ -191,6 +211,28 @@ body{background:#fff;color:var(--cft-ink)}
   <a class="hero-btn hero-btn--primary" href="https://lin.ee/9HpcWaL" target="_blank" rel="noopener noreferrer"><i class="fa-regular fa-comments"></i> 公式LINEで遠方購入を相談</a>
  </div><div class="nationwide-box__media" role="img" aria-label="カーフレンズツバサの展示車両"></div>
 </div></div></section>
+
+@php($reviewSources = config('reviews.sources', []))
+<section class="home-section reviews-section" id="reviews"><div class="container reviews-layout">
+ <div class="reviews-intro">
+  <div class="eyebrow">CUSTOMER REVIEWS</div>
+  <h2 class="section-heading">お店選びの前に、<br>実際の評価をご覧ください。</h2>
+  <p class="section-lead">購入されたお客様から寄せられた評価を、各中古車情報サイトで公開しています。</p>
+  <p class="reviews-intro__note">評価点・投稿件数・最新投稿日は各媒体の掲載情報（{{ config('reviews.checked_at') }}）です。口コミ本文は転載せず、公式ページでご確認いただけます。</p>
+ </div>
+ <div class="review-sources" aria-label="外部サイトの口コミ評価">
+  @foreach($reviewSources as $source)
+  <a class="review-source" href="{{ $source['url'] }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $source['name'] }}の口コミを見る">
+   <span class="review-source__brand">{{ $source['name'] }}</span>
+   <span>
+    <span class="review-source__score"><span class="review-source__rating">{{ $source['rating'] }}<small>/ 5.0</small></span><span class="review-source__stars" aria-label="5つ星評価"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></span>
+    <span class="review-source__meta"><span>口コミ {{ number_format($source['count']) }}件</span><span>最新投稿日 {{ $source['latest_review_date'] }}</span></span>
+   </span>
+   <span class="review-source__arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up"></i></span>
+  </a>
+  @endforeach
+ </div>
+</div></section>
 
 <section class="home-section" id="store"><div class="container">
  <div class="eyebrow">STORE</div><h2 class="section-heading">つくば市大井の展示場で、<br>実際にお確かめください。</h2><p class="section-lead">ゆっくり車両をご覧いただくため、ご来店前の予約をおすすめしています。</p>

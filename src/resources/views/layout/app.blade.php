@@ -58,6 +58,7 @@
             <a href="{{ url('/') }}">HOME</a>
             <a href="{{ url('/#inventory') }}">STOCK</a>
             <a href="{{ url('/#quality') }}">QUALITY</a>
+            <a href="{{ url('/#reviews') }}">REVIEWS</a>
             <a href="{{ url('/#store') }}">STORE</a>
             <details class="site-nav__company">
                 <summary>COMPANY</summary>
@@ -102,6 +103,7 @@
                     <h6>STOCK</h6>
                     <a href="https://www.goo-net.com/usedcar_shop/0401923/stock.html" target="_blank" rel="noopener noreferrer">グーネット在庫</a>
                     <a href="https://www.carsensor.net/shop/ibaraki/325043001/stocklist/" target="_blank" rel="noopener noreferrer">カーセンサー在庫</a>
+                    <a href="{{ url('/#reviews') }}">お客様の評価</a>
                     <a href="{{ url('/#store') }}">店舗案内</a>
                 </div>
                 <div>
